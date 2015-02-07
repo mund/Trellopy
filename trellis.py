@@ -53,7 +53,6 @@ class Trellis(object):
         else:
             self.db.create_board(thing)
 
-
     def task_rename(self, old_thing, new_name):
         if '/' in old_thing:
             if len(old_thing.split('/')) == 2:
