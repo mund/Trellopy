@@ -8,3 +8,4 @@ snips
 *.ns
 *.0
 *.lock
+.journal*
