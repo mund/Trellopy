@@ -9,3 +9,4 @@ snips
 *.0
 *.lock
 .journal*
+*.db

@@ -9,32 +9,63 @@ class box(object):
 		self.boards.create_index('name', unique=True)
 		self.members.create_index('name',unique=True)
 
+	def get_board(self,board_name):
+		try:
+			return self.boards.find({'name':board_name})[0]
+		except IndexError, e:
+			print "Could not find board with name:",board_name
+
+	def get_list(self,board_name,list_name):
+		try:
+			board = self.boards.find({'name':board_name})[0]
+			lists = board.get('lists')
+			if lists:
+				for one_list in lists:
+					if one_list['name'] == list_name:
+						return one_list
+		except IndexError, e:
+			print "Could not find board with name:",board_name
+
 	def create_board(self,board_name):
 		try:
 			self.boards.insert({'type':'board','name':board_name})
+			print "Successfully created board with name",board_name+"."
 		except pymongo.errors.DuplicateKeyError, e:
-			print "Another board with name",board_name,"already exists."	
+			print "Another board with name",board_name,"already exists."
 
 	def create_list(self,board_name,list_name):
 		result = self.boards.find({'name':board_name})[0] 
 		new_list = {'type':'list','name':list_name}
-		if result.get('lists'):
-			result['lists'].append(new_list)
+		all_list = result.get('lists')
+		if all_list:
+			for single in all_list:
+				if single['name'] == list_name:
+					print "A list with name",list_name,"already exists in board",board_name
+					return None
+			all_list.append(new_list)
 		else:
 			result['lists'] = [new_list,]
+		print "Adding list",list_name,"to board",board_name
 		self.boards.update({'name':board_name}, {'$set':result})
 
 	def create_card(self,board_name,list_name,card_name):
 		result = self.boards.find({'name':board_name})[0]
 		new_card = {'type':'card', 'name':card_name}
-		if result.get('lists'):
-			for l in result.get('lists'):
-				if l['name'] == list_name:
-					if l.get('cards'):
-						l.get('cards').append(new_card)
+		all_list = result.get('lists')
+		if all_list:
+			for single in all_list:
+				if single['name'] == list_name:
+					cards = single.get('cards')
+					if cards:
+						for card in cards:
+							if card['name'] == card_name:
+								print "A card with name",card_name,"already exists in list",list_name,"in board",board_name
+								return None
+						cards.append(new_card)
 					else:
-						l['cards'] = [new_card,]
-		print self.boards.update({'name':board_name}, {'$set':result}, upsert=False)
+						single['cards'] = [new_card,]
+		print "Adding card",card_name,"to list",list_name,"in board",board_name
+		self.boards.update({'name':board_name}, {'$set':result}, upsert=False)
 
 	def rename_board(self,board_name,new_name):
 		result = self.boards.find({'name':board_name})[0]
@@ -59,12 +90,14 @@ class box(object):
 					for c in l.get('cards'):
 						if c['name'] == card_name:
 							c['name'] = new_name
-		print self.boards.update({'name':board_name}, {'$set':result}, upsert=False)
+		print self.boards.update({'name':board_name}, 
+				{'$set':result}, upsert=False)
 
 	def archive_board(self,board_name):
 		result = self.boards.find({'name':board_name})[0]
 		result['archive'] = True
-		print self.boards.update({'name':board_name}, {'$set': result},upsert=False)
+		print self.boards.update({'name':board_name}, 
+				{'$set': result},upsert=False)
 
 	def archive_list(self,board_name,list_name):
 		result = self.boards.find({'name':board_name})[0]
@@ -138,10 +171,10 @@ class box(object):
 			for each_list in lists:
 				if each_list['name'] == list_name:
 					cards = each_list.get('cards')
-						if cards:
-							cards.append(card)
-						else:
-							each_list['cards'] = [cards,]
+					if cards:
+						cards.append(card)
+					else:
+						each_list['cards'] = [cards,]
 		print self.boards.update({'name':board_name}, {'$set':result}, upsert=False)
 
 	def fetch_card(self,boardlistcard):
@@ -174,5 +207,6 @@ class box(object):
 	def add_member(self,member_name):
 		try: 
 			self.members.insert({'type':'member','name':member_name})
+			print "Successfully created member with name",member_name+"."
 		except pymongo.errors.DuplicateKeyError, e:
 			print "Another member with name",member_name,"already exists."	

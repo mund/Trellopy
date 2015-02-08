@@ -1,4 +1,3 @@
-import sys
 import trellis
 #from trellis import Trellis
 

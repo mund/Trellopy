@@ -2,110 +2,68 @@
     Trellis: A trello mockup in Python
 """
 import sys
-import databox
+import executioner
 
 class Trellis(object):
     def __init__(self):
-        self.db = databox.box()
+        # self.db = databox.box()
+        self.execute = executioner.Executioner()
         self.elements = ['board','list','card',
                     'member','label','archive']
         self.command_list = ['list','create','rename','archive',
                     'getorder','reorder','move','assign']
         
-    def begin(self):
-        command_line_argument_length = len(sys.argv)
-        if command_line_argument_length == 0:
-            raise IndexError
-        if command_line_argument_length == 1:
-            self.print_help()
-        else:
-            self.begin_executing(sys.argv[1:])
+    def begin(self,test=False):
+        if not test:
+            command_line_argument_length = len(sys.argv)
+            if command_line_argument_length == 0:
+                raise IndexError
+            if command_line_argument_length == 1:
+                self.print_help()
+            else:
+                self.begin_executing(sys.argv[1:])
+        if test:
+            print 'OK!'
+            return True
 
     def begin_executing(self,commands):
-        action = commands[0]
-        if action == 'create':
-            # Should only have one argument
-            self.task_create(commands[-1])
-        elif action == 'rename':
-            self.task_rename(commands[-2], commands[-1])
-        elif action == 'archive':
-            self.task_archive(commands[-1])
-        elif action == 'getorder':
-            self.task_getorder(commands[-1])
-        elif action == 'reorder':
-            self.task_reorder(commands[-2], commands[-1])
-        elif action == 'move':
-            self.task_move(commands[-2],commands[-1])
-        elif action == 'assign':
-            self.task_assign(commands[-2],commands[-1])
-        elif action == 'member':
-            self.task_member(commands[-1])
+        if len(commands) == 2 or len(commands) == 3:
+            action = commands[0]
+            if len(commands) == 2:
+                thing = commands[-1]
+                if action == 'display':
+                    self.execute.task_display(thing)
+                elif action == 'create':
+                    self.execute.task_create(thing)
+                elif action == 'archive':
+                    self.execute.task_archive(thing)
+                elif action == 'getorder':
+                    self.execute.task_getorder(thing)
+                elif action == 'member':
+                    self.execute.task_add_member(thing)
+                else:
+                    self.print_help()
+            elif len(commands) == 3:
+                if action == 'rename':
+                    new_name = commands[-1]
+                    old_name = commands[-2]
+                    self.execute.task_rename(old_name, new_name)
+                elif action == 'reorder':
+                    new_order = commands[-1]
+                    reorderme = commands[-2]
+                    self.execute.task_reorder(reorderme, new_order)
+                elif action == 'move':
+                    target = commands[-1]
+                    source = commands[-2]
+                    self.execute.task_move(source,target)
+                elif action == 'assign':
+                    assignee = commands[-1]
+                    assigned = commands[-2]
+                    self.execute.task_assign(assigned,assignee)
+            else:
+                self.print_help()
         else:
             self.print_help()
-
-    def task_create(self,thing):
-        if '/' in thing:
-            if len(thing.split('/')) == 2:
-                board,in_list = thing.split('/')
-                self.db.create_list(board,in_list)
-            if len(thing.split('/')) == 3:
-                board,in_list,card = thing.split('/')
-                self.db.create_card(board,in_list,card)
-        else:
-            self.db.create_board(thing)
-
-    def task_rename(self, old_thing, new_name):
-        if '/' in old_thing:
-            if len(old_thing.split('/')) == 2:
-                board_name,list_name = old_thing.split('/')
-                self.db.rename_list(board_name,list_name,new_name)
-            if len(old_thing.split('/')) == 3:
-                board_name,list_name,card_name = old_thing.split('/')
-                self.db.rename_card(board_name,list_name,card_name,new_name)
-        else:
-            self.db.rename_board(old_thing,new_name)
-
-    def task_archive(self,thing):
-        if '/' in thing:
-            if len(thing.split('/')) == 2:
-                board_name,list_name = thing.split('/')
-                self.db.archive_list(board_name,list_name)
-            if len(thing.split('/')) == 3:
-                board_name,list_name,card_name = thing.split('/')
-                self.db.archive_card(board_name,list_name,card_name)
-        else:
-            self.db.archive_board(thing)
-
-    def task_getorder(self, thing):
-        if '/' in thing:
-            board_name,list_name = thing.split('/')
-            self.db.getorder(board_name,list_name)
-        else:
-            self.db.getorder(thing)
-
-    def task_reorder(self, thing, new_order):
-        if '/' in thing:
-            board_name,list_name = thing.split('/')
-            #print "Reorder list",list_name,"in board",board_name,"with new order",new_order
-            self.db.reorder(board_name,new_order,list_name)
-        else:
-            #print "Reorder",thing,"with new order",new_order
-            self.db.reorder(thing,new_order)
-
-    def task_move(self, source, destination):
-        if len(source.split('/')) == 3 and len(destination.split('/')) == 2:
-            self.db.move(source,destination)
-
-    def task_member(self,member_name):
-        self.db.add_member(member_name)
-
-    def task_assign(self,boardlistcard,member):
-        self.db.assign(boardlistcard,member)
-
-    def list_all_the_things(self,thing):
-        item = thing[:-1] # chop the 's'
-        if item in self.elements:
-            self.db.list_all(thing)
 
     def print_help(self):
         halp = """
