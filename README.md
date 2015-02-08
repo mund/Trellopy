@@ -1,5 +1,5 @@
 ## Trellis: Trello in Python, via CLI
-
+[![Build Status](https://travis-ci.org/mund/Trellis.svg?branch=master)](https://travis-ci.org/mund/Trellis)
 ### Introduction
 Currently supports these basic actions:
 
