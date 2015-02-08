@@ -110,6 +110,8 @@ class Trellis(object):
     def print_help(self):
         halp = """
 python use.py   display     board
+                            board/list
+                            board/list/card
 
                 create      board
                             board/list
