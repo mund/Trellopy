@@ -84,3 +84,49 @@ class box(object):
 						if c['name'] == card_name:
 							c['archive'] = True
 		print self.boards.update({'name':board_name}, {'$set':result}, upsert=False)
+
+	def getorder(self,board_name,list_name=None):
+		result = self.boards.find({'name':board_name})[0]
+		if list_name:
+			print "Getting card order for list",list_name,"in board",board_name
+			for l in result.get('lists'):
+				cards = l.get('cards')
+				if cards:
+					for c in cards:
+						print c['name']
+		else:
+			for l in result.get('lists'):
+				print l['name']
+			
+	def reorder(self,board_name,new_order,list_name=None):
+		result = self.boards.find({'name':board_name})[0]
+		if list_name:
+			for each_list in result.get('lists'):
+				cards = each_list.get('cards')
+				if cards:
+					inputed_card = new_order.split(',')
+					each_list['cards'] = self.reorder_list(cards,inputed_card)
+		else:
+			current_list = result.get('lists')
+			inputed_list = new_order.split(',')
+			if len(current_list) == len(inputed_list):
+				result['lists'] = self.reorder_list(current_list, inputed_list)
+		print self.boards.update({'name':board_name}, {'$set':result}, upsert=False)
+
+	def reorder_list(self,current_list, updated_list):
+		return_list = []
+		print updated_list
+		for input_index in range(len(updated_list)):
+			new_name = updated_list[input_index]
+			# Look for item in current
+			for dictionary in current_list:
+				if dictionary['name'] == new_name:
+					# Found it: target=dictionary,index=dict_index
+					return_list.append(dictionary)
+		return return_list
+
+	def reorder_lists(self,board_name,list_order):
+		pass
+
+	def reorder_cards(self,board_name,list_name,card_order):
+		pass

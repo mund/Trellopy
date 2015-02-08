@@ -10,7 +10,7 @@ class Trellis(object):
         self.elements = ['board','list','card',
                     'member','label','archive']
         self.command_list = ['list','create','rename','archive',
-                    'reorder','move','assign']
+                    'getorder','reorder','move','assign']
         
     def begin(self):
         command_line_argument_length = len(sys.argv)
@@ -30,17 +30,16 @@ class Trellis(object):
             self.task_rename(commands[-2], commands[-1])
         elif action == 'archive':
             self.task_archive(commands[-1])
+        elif action == 'getorder':
+            self.task_getorder(commands[-1])
         elif action == 'reorder':
-            pass
+            self.task_reorder(commands[-2], commands[-1])
         elif action == 'move':
-            pass
+            self.task_move(command[-2],command[-1])
         elif action == 'assign':
             pass
         else:
             self.print_help()
-
-    def get_board(self,name):
-        board = self.db.gimme(name)
 
     def task_create(self,thing):
         if '/' in thing:
@@ -75,6 +74,22 @@ class Trellis(object):
         else:
             self.db.archive_board(thing)
 
+    def task_getorder(self, thing):
+        if '/' in thing:
+            board_name,list_name = thing.split('/')
+            self.db.getorder(board_name,list_name)
+        else:
+            self.db.getorder(thing)
+
+    def task_reorder(self, thing, new_order):
+        if '/' in thing:
+            board_name,list_name = thing.split('/')
+            #print "Reorder list",list_name,"in board",board_name,"with new order",new_order
+            self.db.reorder(board_name,new_order,list_name)
+        else:
+            #print "Reorder",thing,"with new order",new_order
+            self.db.reorder(thing,new_order)
+
     def list_all_the_things(self,thing):
         item = thing[:-1] # chop the 's'
         if item in self.elements:
@@ -93,9 +108,12 @@ python use.py   create      board
                 archive     board
                             board/list
                             board/list/card
+
+                getorder    board
+                            board/list
                 
-                reorder     board/list              neworder
-                            board/list/card         neworder
+                reorder     board/list              list1,list2,...,listn
+                            board/list/card         card1,card2,...,cardn
                 
                 move        board/list              board/list
                 
