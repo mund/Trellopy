@@ -125,8 +125,33 @@ class box(object):
 					return_list.append(dictionary)
 		return return_list
 
-	def reorder_lists(self,board_name,list_order):
-		pass
+	def move(self,boardlistcard,boardlist):
+		dest_card = self.fetch_card(boardlistcard)
+		self.move_card(dest_card,boardlist)
 
-	def reorder_cards(self,board_name,list_name,card_order):
-		pass
+	def move_card(self,card,boardlist):
+		board_name,list_name = boardlist.split('/')
+		result = self.boards.find({'name':board_name})[0]
+		lists = result.get('lists')
+		if lists:
+			for each_list in lists:
+				if each_list['name'] == list_name:
+					cards = each_list.get('cards')
+						if cards:
+							cards.append(card)
+						else:
+							each_list['cards'] = [cards,]
+		print self.boards.update({'name':board_name}, {'$set':result}, upsert=False)
+
+	def fetch_card(self,boardlistcard):
+		board_name,list_name,card_name = boardlistcard.split('/')
+		result = self.boards.find({'name':board_name})[0]
+		lists = result.get('lists')
+		if lists:
+			for each_list in lists:
+				if list_name == each_list['name']:
+					cards = each_list.get('cards')
+					if cards:
+						for card in cards:
+							if card['name'] == card_name:
+								return card

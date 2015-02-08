@@ -1,20 +1,10 @@
-snips
-
-# Logs and databases #
-######################
-*.log
-*.sql
-*.sqlite
-*.ns
-*.0
-*.lock
- 
-# OS generated files #
-######################
 .DS_Store
 .DS_Store?
 ._*
 .Spotlight-V100
 .Trashes
-ehthumbs.db
-Thumbs.db 
+snips
+*.pyc
+*.ns
+*.0
+*.lock

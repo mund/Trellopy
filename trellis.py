@@ -35,7 +35,7 @@ class Trellis(object):
         elif action == 'reorder':
             self.task_reorder(commands[-2], commands[-1])
         elif action == 'move':
-            self.task_move(command[-2],command[-1])
+            self.task_move(commands[-2],commands[-1])
         elif action == 'assign':
             pass
         else:
@@ -90,6 +90,10 @@ class Trellis(object):
             #print "Reorder",thing,"with new order",new_order
             self.db.reorder(thing,new_order)
 
+    def task_move(self, source, destination):
+        if len(source.split('/')) == 3 and len(destination.split('/')) == 2:
+            self.db.move(source,destination)
+
     def list_all_the_things(self,thing):
         item = thing[:-1] # chop the 's'
         if item in self.elements:
@@ -115,7 +119,7 @@ python use.py   create      board
                 reorder     board/list              list1,list2,...,listn
                             board/list/card         card1,card2,...,cardn
                 
-                move        board/list              board/list
+                move        board/list/card         board/list
                 
                 assign      board/list/card         member_name
 """
