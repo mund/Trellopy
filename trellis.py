@@ -37,7 +37,9 @@ class Trellis(object):
         elif action == 'move':
             self.task_move(commands[-2],commands[-1])
         elif action == 'assign':
-            pass
+            self.task_assign(commands[-2],commands[-1])
+        elif action == 'member':
+            self.task_member(commands[-1])
         else:
             self.print_help()
 
@@ -94,6 +96,12 @@ class Trellis(object):
         if len(source.split('/')) == 3 and len(destination.split('/')) == 2:
             self.db.move(source,destination)
 
+    def task_member(self,member_name):
+        self.db.add_member(member_name)
+
+    def task_assign(self,boardlistcard,member):
+        self.db.assign(boardlistcard,member)
+
     def list_all_the_things(self,thing):
         item = thing[:-1] # chop the 's'
         if item in self.elements:
@@ -101,7 +109,9 @@ class Trellis(object):
 
     def print_help(self):
         halp = """
-python use.py   create      board
+python use.py   display     board
+
+                create      board
                             board/list
                             board/list/card
                 
@@ -122,5 +132,7 @@ python use.py   create      board
                 move        board/list/card         board/list
                 
                 assign      board/list/card         member_name
+
+                member      member_name
 """
         print halp

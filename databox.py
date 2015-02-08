@@ -5,11 +5,12 @@ class box(object):
 		self.client = pymongo.MongoClient("mongodb://localhost:27017/")
 		self.database = self.client.stopgapdb
 		self.boards = self.database.boards # This is a collection
+		self.members = self.database.members
 		self.boards.create_index('name', unique=True)
+		self.members.create_index('name',unique=True)
 
 	def create_board(self,board_name):
 		try:
-			board = {'type':'board','name':board_name}
 			self.boards.insert({'type':'board','name':board_name})
 		except pymongo.errors.DuplicateKeyError, e:
 			print "Another board with name",board_name,"already exists."	
@@ -155,3 +156,23 @@ class box(object):
 						for card in cards:
 							if card['name'] == card_name:
 								return card
+
+	def assign(self,boardlistcard,member):
+		board_name,list_name,card_name = boardlistcard.split('/')
+		result = self.boards.find({'name':board_name})[0]
+		lists = result.get('lists')
+		if lists:
+			for each_list in lists:
+				if list_name == each_list['name']:
+					cards = each_list.get('cards')
+					if cards:
+						for card in cards:
+							if card['name'] == card_name:
+								card['assignee'] = member
+		print self.boards.update({'name':board_name}, {'$set':result}, upsert=False)
+
+	def add_member(self,member_name):
+		try: 
+			self.members.insert({'type':'member','name':member_name})
+		except pymongo.errors.DuplicateKeyError, e:
+			print "Another member with name",member_name,"already exists."	
