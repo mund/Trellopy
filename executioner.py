@@ -31,16 +31,16 @@ class Executioner(object):
         else:
             self.db.create_board(thing)
 
-    def task_rename(self, old_thing, new_name):
-        if '/' in old_thing:
-            if len(old_thing.split('/')) == 2:
-                board_name,list_name = old_thing.split('/')
+    def task_rename(self,old_name,new_name):
+        if '/' in old_name:
+            if len(old_name.split('/')) == 2:
+                board_name,list_name = old_name.split('/')
                 self.db.rename_list(board_name,list_name,new_name)
-            if len(old_thing.split('/')) == 3:
-                board_name,list_name,card_name = old_thing.split('/')
+            if len(old_name.split('/')) == 3:
+                board_name,list_name,card_name = old_name.split('/')
                 self.db.rename_card(board_name,list_name,card_name,new_name)
         else:
-            self.db.rename_board(old_thing,new_name)
+            self.db.rename_board(old_name,new_name)
 
     def task_archive(self,thing):
         if '/' in thing:

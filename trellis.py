@@ -8,10 +8,10 @@ class Trellis(object):
     def __init__(self):
         # self.db = databox.box()
         self.execute = executioner.Executioner()
-        self.elements = ['board','list','card',
-                    'member','label','archive']
-        self.command_list = ['list','create','rename','archive',
-                    'getorder','reorder','move','assign']
+        # self.elements = ['board','list','card',
+        #             'member','label','archive']
+        self.command_list = ['display','create','rename','archive',
+                    'getorder','reorder','move','assign', 'member']
         
     def begin(self,test=False):
         if not test:
@@ -27,41 +27,40 @@ class Trellis(object):
             return True
 
     def begin_executing(self,commands):
-        if len(commands) == 2 or len(commands) == 3:
-            action = commands[0]
-            if len(commands) == 2:
-                thing = commands[-1]
-                if action == 'display':
-                    self.execute.task_display(thing)
-                elif action == 'create':
-                    self.execute.task_create(thing)
-                elif action == 'archive':
-                    self.execute.task_archive(thing)
-                elif action == 'getorder':
-                    self.execute.task_getorder(thing)
-                elif action == 'member':
-                    self.execute.task_add_member(thing)
-                else:
-                    self.print_help()
-            elif len(commands) == 3:
-                if action == 'rename':
-                    new_name = commands[-1]
-                    old_name = commands[-2]
-                    self.execute.task_rename(old_name, new_name)
-                elif action == 'reorder':
-                    new_order = commands[-1]
-                    reorderme = commands[-2]
-                    self.execute.task_reorder(reorderme, new_order)
-                elif action == 'move':
-                    target = commands[-1]
-                    source = commands[-2]
-                    self.execute.task_move(source,target)
-                elif action == 'assign':
-                    assignee = commands[-1]
-                    assigned = commands[-2]
-                    self.execute.task_assign(assigned,assignee)
-            else:
-                self.print_help()
+        action = commands[0]
+        if len(commands) == 2:
+            thing = commands[-1]
+            if action == 'display':
+                self.execute.task_display(thing)
+            elif action == 'create':
+                self.execute.task_create(thing)
+            elif action == 'archive':
+                self.execute.task_archive(thing)
+            elif action == 'getorder':
+                self.execute.task_getorder(thing)
+            elif action == 'member':
+                self.execute.task_add_member(thing)
+            elif action in self.command_list:
+                print "You provided two arguments, but the command needs three."
+        elif len(commands) == 3:
+            if action == 'rename':
+                new_name = commands[-1]
+                old_name = commands[-2]
+                self.execute.task_rename(old_name, new_name)
+            elif action == 'reorder':
+                new_order = commands[-1]
+                reorderme = commands[-2]
+                self.execute.task_reorder(reorderme, new_order)
+            elif action == 'move':
+                target = commands[-1]
+                source = commands[-2]
+                self.execute.task_move(source,target)
+            elif action == 'assign':
+                assignee = commands[-1]
+                assigned = commands[-2]
+                self.execute.task_assign(assigned,assignee)
+            elif action in self.command_list:
+                print "You provided three arguments, but the command only takes two."
         else:
             self.print_help()
 

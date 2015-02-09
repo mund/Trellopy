@@ -12,8 +12,9 @@ Currently supports these basic actions:
 
 ### TODO
 1. WRITE MORE TESTS
-2. Travis-CI integration
-2. Pretty print board, lists and cards
-3. Pretty print members
-4. Document all the bugs
-5. Build an API wrapper to provide information as JSON to a web browser
+2. Travis-CI integration <- done!
+3. Pretty print board, lists and cards
+4. Pretty print members
+5. Document all the bugs
+6. Make code PEP-8 compatible
+7. Build an API wrapper to provide information as JSON to a web browser

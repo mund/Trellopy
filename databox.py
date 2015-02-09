@@ -68,36 +68,51 @@ class box(object):
 		self.boards.update({'name':board_name}, {'$set':result}, upsert=False)
 
 	def rename_board(self,board_name,new_name):
-		result = self.boards.find({'name':board_name})[0]
-		result['name'] = new_name
-		print self.boards.update({'name':board_name},{'$set':result},upsert=False)
+		try:
+			result = self.boards.find({'name':board_name})[0]
+			result['name'] = new_name
+			self.boards.update({'name':board_name},
+					{'$set':result},upsert=False)
+			print "Successfully renamed board",board_name,"to",new_name
+		except pymongo.errors.DuplicateKeyError, e:
+			print "Another board with name",board_name,"already exists."
 
 	def rename_list(self,board_name,list_name,new_name):
-		result = self.boards.find({'name':board_name})[0]
-		if result.get('lists'):
-			l = result.get('lists')
-			for d in l:
-				if d['name'] == list_name:
-					d['name'] = new_name
-		print self.boards.update({'name':board_name},{'$set':result},upsert=False)
+		try:
+			result = self.boards.find({'name':board_name})[0]
+			if result.get('lists'):
+				lists = result.get('lists')
+				for card in lists:
+					if card['name'] == list_name:
+						card['name'] = new_name
+			self.boards.update({'name':board_name},
+				{'$set':result},upsert=False)
+			print "Successfully renamed list",list_name,"to",new_name
+		except pymongo.errors.DuplicateKeyError, e:
+			print "A list with name",list_name,"already exists in board",board_name
 
 	def rename_card(self,board_name,list_name,card_name,new_name):
-		result = self.boards.find({'name':board_name})[0]
-		new_card = {'type':'card', 'name':card_name}
-		if result.get('lists'):
-			for l in result.get('lists'):
-				if l['name'] == list_name:
-					for c in l.get('cards'):
-						if c['name'] == card_name:
-							c['name'] = new_name
-		print self.boards.update({'name':board_name}, 
-				{'$set':result}, upsert=False)
+		try:
+			result = self.boards.find({'name':board_name})[0]
+			new_card = {'type':'card', 'name':card_name}
+			if result.get('lists'):
+				for each_list in result.get('lists'):
+					if each_list['name'] == list_name:
+						for card in lists.get('cards'):
+							if card['name'] == card_name:
+								card['name'] = new_name
+			self.boards.update({'name':board_name}, 
+					{'$set':result}, upsert=False)
+			print "Successfully renamed card",card_name,"to",new_name
+		except Exception, e:
+			print "A card with name",card_name,"already exists in list",list_name,"in board",board_name
 
 	def archive_board(self,board_name):
 		result = self.boards.find({'name':board_name})[0]
 		result['archive'] = True
-		print self.boards.update({'name':board_name}, 
+		self.boards.update({'name':board_name}, 
 				{'$set': result},upsert=False)
+		print "Archived board:",board_name
 
 	def archive_list(self,board_name,list_name):
 		result = self.boards.find({'name':board_name})[0]
@@ -106,7 +121,9 @@ class box(object):
 			for d in l:
 				if d['name'] == list_name:
 					d['archive'] = True
-		print self.boards.update({'name':board_name},{'$set':result},upsert=False)
+		self.boards.update({'name':board_name},\
+			{'$set':result},upsert=False)
+		print "Archived list:",list_name
 	
 	def archive_card(self,board_name,list_name,card_name):
 		result = self.boards.find({'name':board_name})[0]
