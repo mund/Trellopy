@@ -55,10 +55,15 @@ class Executioner(object):
 
     def task_getorder(self, thing):
         if '/' in thing:
-            board_name,list_name = thing.split('/')
-            self.db.getorder(board_name,list_name)
+            if len(thing.split('/')) == 2:
+                board_name,list_name = thing.split('/')
+                self.db.get_order(board_name,list_name)
+            else:
+                print "`getorder board` gets the order of lists"
+                print "`getorder board/list` gets the order of "
+                print "  the cards in list `list`"
         else:
-            self.db.getorder(thing)
+            self.db.get_order(thing)
 
     def task_reorder(self, thing, new_order):
         if '/' in thing:

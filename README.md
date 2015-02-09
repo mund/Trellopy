@@ -16,5 +16,6 @@ Currently supports these basic actions:
 3. Pretty print board, lists and cards
 4. Pretty print members
 5. Document all the bugs
+6. Be able to add additional card details, somehow
 6. Make code PEP-8 compatible
 7. Build an API wrapper to provide information as JSON to a web browser
