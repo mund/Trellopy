@@ -13,19 +13,19 @@ class Trellis(object):
         self.command_list = ['display','create','rename','archive',
                     'getorder','reorder','move','assign', 'member']
         
-    def begin(self,test=False):
-        if not test:
-            command_line_argument_length = len(sys.argv)
-            if command_line_argument_length == 0:
-                raise IndexError
-            if command_line_argument_length == 1:
-                self.print_help()
-            else:
-                self.begin_executing(sys.argv[1:])
-        if test:
-            print 'OK!'
-            return True
+    def begin(self):
+        commands = self.parse_input(sys.argv)
+        if commands:
+            self.begin_executing(commands)
 
+    def parse_input(self,cmd):
+        if len(cmd) == 0:
+            raise IndexError
+        if len(cmd) == 1:
+            self.print_help()
+        else:
+            return cmd[1:]
+            
     def begin_executing(self,commands):
         action = commands[0]
         if len(commands) == 2:
@@ -64,6 +64,12 @@ class Trellis(object):
         else:
             self.print_help()
 
+    def parse_two_commands(self,commands):
+        pass
+
+    def parse_three_commands():
+        pass
+
     def print_help(self):
         halp = """
 python use.py   display     board
@@ -85,8 +91,8 @@ python use.py   display     board
                 getorder    board
                             board/list
                 
-                reorder     board/list              list1,list2,...,listn
-                            board/list/card         card1,card2,...,cardn
+                reorder     board/list              list1,list2,...,listN
+                            board/list/card         card1,card2,...,cardN
                 
                 move        board/list/card         board/list
                 
@@ -95,3 +101,4 @@ python use.py   display     board
                 member      member_name
 """
         print halp
+        return halp

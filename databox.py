@@ -14,6 +14,7 @@ class box(object):
 			return self.boards.find({'name':board_name})[0]
 		except IndexError, e:
 			print "Could not find board with name:",board_name
+	
 	def get_list(self,board_name,list_name):
 		try:
 			board = self.boards.find({'name':board_name})[0]
@@ -24,6 +25,22 @@ class box(object):
 						return one_list
 		except IndexError, e:
 			print "Could not find board with name:",board_name
+	
+	def get_card(self,board_name,list_name,card_name):
+		try:
+			board = self.boards.find({'name':board_name})[0]
+			lists = board.get('lists')
+			if lists:
+				for one_list in lists:
+					if one_list['name'] == list_name:
+						cards = one_list.get('cards')
+						if cards:
+							for card in cards:
+								if card['name'] == card_name:
+									return card
+		except IndexError, e:
+			print "Could not find board with name:",board_name
+	
 	def get_order(self,board_name,list_name=None):
 		try:
 			result = self.boards.find({'name':board_name})[0]
@@ -55,6 +72,7 @@ class box(object):
 			print "Successfully created board with name",board_name+"."
 		except pymongo.errors.DuplicateKeyError, e:
 			print "Another board with name",board_name,"already exists."
+	
 	def create_list(self,board_name,list_name):
 		result = self.boards.find({'name':board_name})[0] 
 		new_list = {'type':'list','name':list_name}
@@ -69,6 +87,7 @@ class box(object):
 			result['lists'] = [new_list,]
 		print "Adding list",list_name,"to board",board_name
 		self.boards.update({'name':board_name}, {'$set':result})
+	
 	def create_card(self,board_name,list_name,card_name):
 		result = self.boards.find({'name':board_name})[0]
 		new_card = {'type':'card', 'name':card_name}
@@ -103,37 +122,45 @@ class box(object):
 			print "Could not find board with name",board_name
 		except pymongo.errors.DuplicateKeyError, e:
 			print "Another board with name",board_name,"already exists."
+	
 	def rename_list(self,board_name,list_name,new_name):
 		try:
 			result = self.boards.find({'name':board_name})[0]
 			if result.get('lists'):
 				lists = result.get('lists')
 				for card in lists:
-					if card['name'] == list_name:
+					if card['name'] == list_name and card['name'] != new_name:
 						card['name'] = new_name
 						self.boards.update({'name':board_name},
 							{'$set':result},upsert=False)
 						print "Successfully renamed list",list_name,"to",new_name
 						return True
+					else:
+						print "The name",new_name,"is already taken by another list"
+						return None
 			print "Could not find list",list_name,"in board",board_name
 		except IndexError:
 			print "Could not find board with name",board_name
 		except pymongo.errors.DuplicateKeyError, e:
 			print "A list with name",list_name,"already exists in board",board_name
+	
 	def rename_card(self,board_name,list_name,card_name,new_name):
 		try:
 			result = self.boards.find({'name':board_name})[0]
 			new_card = {'type':'card', 'name':card_name}
 			if result.get('lists'):
 				for each_list in result.get('lists'):
-					if each_list['name'] == list_name:
+					if each_list['name'] == list_name and each_list['name'] != new_name:
 						for card in each_list.get('cards'):
-							if card['name'] == card_name:
+							if card['name'] == card_name and card['name'] != new_name:
 								card['name'] = new_name
 								self.boards.update({'name':board_name}, 
 									{'$set':result}, upsert=False)
 								print "Successfully renamed card",card_name,"to",new_name
 								return True
+							else:
+								print "The name",new_name,"is already taken by another card."
+								return None
 						print "Could not find card",card_name,"not found in list",list_name
 		except pymongo.errors.DuplicateKeyError, e:
 			print "A card with name",card_name,"already exists in list",list_name,"in board",board_name
@@ -232,32 +259,52 @@ class box(object):
 
 	def move(self,boardlistcard,boardlist):
 		dest_card = self.fetch_card(boardlistcard)
-		self.move_card(dest_card,boardlist)
+		if dest_card:
+			self.move_card(dest_card,boardlist)
 	def move_card(self,card,boardlist):
-		board_name,list_name = boardlist.split('/')
-		result = self.boards.find({'name':board_name})[0]
-		lists = result.get('lists')
-		if lists:
-			for each_list in lists:
-				if each_list['name'] == list_name:
-					cards = each_list.get('cards')
-					if cards:
-						cards.append(card)
-					else:
-						each_list['cards'] = [cards,]
-		print self.boards.update({'name':board_name}, {'$set':result}, upsert=False)
+		if len(boardlist.split('/')) == 2:
+			board_name,list_name = boardlist.split('/')
+			try:
+				result = self.boards.find({'name':board_name})[0]
+				lists = result.get('lists')
+				if lists:
+					for each_list in lists:
+						if each_list['name'] == list_name:
+							cards = each_list.get('cards')
+							if cards:
+								cards.append(card)
+							else:
+								each_list['cards'] = [cards,]
+							self.boards.update({'name':board_name}, {'$set':result}, upsert=False)
+							print "Moved",card['name'],"to",boardlist
+							return True
+						print "No list found with name:",list_name
+						return None
+				else:
+					print "No list found in board:",board_name
+			except IndexError, e:
+				print "No board found with name",board_name
 	def fetch_card(self,boardlistcard):
-		board_name,list_name,card_name = boardlistcard.split('/')
-		result = self.boards.find({'name':board_name})[0]
-		lists = result.get('lists')
-		if lists:
-			for each_list in lists:
-				if list_name == each_list['name']:
-					cards = each_list.get('cards')
-					if cards:
-						for card in cards:
-							if card['name'] == card_name:
-								return card
+		if len(boardlistcard.split('/')) == 3:
+			board_name,list_name,card_name = boardlistcard.split('/')
+			result = self.boards.find({'name':board_name})[0]
+			lists = result.get('lists')
+			if lists:
+				for each_list in lists:
+					if list_name == each_list['name']:
+						cards = each_list.get('cards')
+						if cards:
+							for card in cards:
+								if card['name'] == card_name:
+									return card
+							print "No card found in list with name",card_name
+							return None
+						else:
+							print "No cards in list",list_name
+							return None
+			else:
+				print "No list found in board",board_name
+		return None
 
 	def assign(self,boardlistcard,member):
 		board_name,list_name,card_name = boardlistcard.split('/')
@@ -271,7 +318,17 @@ class box(object):
 						for card in cards:
 							if card['name'] == card_name:
 								card['assignee'] = member
-		print self.boards.update({'name':board_name}, {'$set':result}, upsert=False)
+								self.boards.update({'name':board_name}, {'$set':result}, upsert=False)
+								print "Assigned card",card_name,"to",member_name
+								return True
+						print "No card found with name",card_name
+						return None
+					print "No cards found in list",list_name
+					return None
+			print "No list found with name",list_name
+			return None
+		print "No lists found in board",board_name
+		return None
 
 	def add_member(self,member_name):
 		try: 

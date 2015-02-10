@@ -10,10 +10,11 @@ class Executioner(object):
     def task_display(self,boardlistcard):
         if '/' in boardlistcard:
             if len(boardlistcard.split('/')) == 3:
-                board_name,list_name,card_name = thing.split('/')
-                self.show.blist(board_name,list_name)
+                board_name,list_name,card_name = boardlistcard.split('/')
+                self.show.bcard(board_name,list_name,card_name)
             elif len(boardlistcard.split('/')) == 2:
-                board_name,list_name = thing.split('/')
+                board_name,list_name = boardlistcard.split('/')
+                self.show.blist(board_name,list_name)
         else:
             self.show.board(boardlistcard)
 
