@@ -1,5 +1,21 @@
-from mock import Mock
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-if __name__ == '__main__':
-	mock_trellis = Mock(name="Trellis")
-	print mock_trellis
+"""
+test_trellis
+----------------------------------
+
+Tests for `trellis` module.
+"""
+
+
+class TestTrellis():
+    def setUp(self):
+        from trellis import trellis
+
+    def test_create_board(self):
+        control = trellis.BoardController()
+        board = control.add_board('Bard')
+
+    def tearDown(self):
+        pass

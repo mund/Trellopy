@@ -1,0 +1,554 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"_li",
+				"_board_list"
+			],
+			[
+				"board",
+				"board_list"
+			],
+			[
+				"all",
+				"all_labels"
+			],
+			[
+				"BOard",
+				"BoardController"
+			],
+			[
+				"BoardLi",
+				"BoardListCard"
+			],
+			[
+				"retrun",
+				"returnable"
+			],
+			[
+				"new",
+				"new_list_item"
+			],
+			[
+				"name",
+				"name_thing"
+			],
+			[
+				"card",
+				"card_name"
+			],
+			[
+				"ca",
+				"card_name"
+			],
+			[
+				"list",
+				"list_name"
+			],
+			[
+				"boar",
+				"board_name"
+			],
+			[
+				"li",
+				"list_name"
+			],
+			[
+				"liz",
+				"lizt_list"
+			],
+			[
+				"com",
+				"commands"
+			],
+			[
+				"tr",
+				"trellis"
+			],
+			[
+				"print",
+				"print_r"
+			],
+			[
+				"item",
+				"item_array"
+			],
+			[
+				"json_d",
+				"json_decod"
+			],
+			[
+				"up",
+				"up_code"
+			],
+			[
+				"is_nu",
+				"is_numeric"
+			],
+			[
+				"re",
+				"return"
+			],
+			[
+				"retur",
+				"returned_list"
+			],
+			[
+				"ret",
+				"return_list"
+			],
+			[
+				"inp",
+				"inputed_card"
+			],
+			[
+				"upda",
+				"updated_list"
+			],
+			[
+				"c",
+				"card_name"
+			],
+			[
+				"comm",
+				"command_list"
+			],
+			[
+				"bo",
+				"board_name"
+			],
+			[
+				"ex",
+				"executioner"
+			],
+			[
+				"ass",
+				"assignee"
+			],
+			[
+				"mem",
+				"member_name"
+			],
+			[
+				"m",
+				"member"
+			],
+			[
+				"creat",
+				"create_index"
+			],
+			[
+				"memb",
+				"member_name"
+			],
+			[
+				"in",
+				"inputed_card"
+			],
+			[
+				"reor",
+				"reorder_list"
+			],
+			[
+				"cur",
+				"current_list"
+			],
+			[
+				"return",
+				"return_list"
+			],
+			[
+				"curr",
+				"current_list"
+			],
+			[
+				"cu",
+				"current_list"
+			],
+			[
+				"req",
+				"require_index"
+			],
+			[
+				"lis",
+				"list_of_dicts"
+			],
+			[
+				"n",
+				"name"
+			],
+			[
+				"d_",
+				"d_name"
+			],
+			[
+				"new_",
+				"new_card"
+			],
+			[
+				"try",
+				"try	Try/Except"
+			],
+			[
+				"ba",
+				"board_name"
+			],
+			[
+				"typ",
+				"type_of"
+			],
+			[
+				"ty",
+				"type_of"
+			],
+			[
+				"the_",
+				"the_param"
+			],
+			[
+				"the",
+				"the_param"
+			],
+			[
+				"b",
+				"board_name"
+			],
+			[
+				"t",
+				"try	Try/Except"
+			],
+			[
+				"ins",
+				"insert_sql"
+			],
+			[
+				"cre",
+				"create_table_boards"
+			],
+			[
+				"boards",
+				"boards"
+			],
+			[
+				"if",
+				"ifmain	if __name__ == '__main__'"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "trellis/trellis.py",
+			"settings":
+			{
+				"buffer_size": 2233,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "trellis/boards.py",
+			"settings":
+			{
+				"buffer_size": 3502,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/Rust/Rust.sublime-build",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"Pack",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"package",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 382.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2deb499853c4371624f5a07e27c334aa' + 'bf8c4e67d14fb0525ba4f89698a6d7e1'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/mund/Code/Python/trello/trellis"
+	],
+	"file_history":
+	[
+		"/Users/mund/Code/Python/Trello/trellis/trellis/backend.py",
+		"/Users/mund/Code/Python/trello/trellis/.gitignore",
+		"/Users/mund/Code/Python/trello/trellis/trellis/trellis.py",
+		"/Users/mund/Code/Python/trello/trellis/trellis/boards.py",
+		"/Users/mund/Code/Python/trello/trellis/trellis/members.py",
+		"/Users/mund/Code/Python/trello/trellis/tests/test_boards.py",
+		"/Users/mund/Code/Python/trello/trellis/tests/test_trellis.py",
+		"/Users/mund/Code/Python/trello/trellis/trellis.sublime-project",
+		"/Users/mund/Library/Application Support/Sublime Text 3/Packages/SublimeLinter/SublimeLinter.sublime-settings",
+		"/Users/mund/Code/Python/trello/trellis/trellis/gimme.py",
+		"/Users/mund/Code/Python/trello/trellis/trellis/boardlistcard.py",
+		"/Users/mund/Code/Python/trello/trellis/trellis/boardlist.py",
+		"/Users/mund/Code/Python/trello/trellis/trellis/exceptional.py",
+		"/Users/mund/Code/Python/trello/trellis/trellis/helpinghands.py",
+		"/Users/mund/Code/Python/trello/trellis/setup.py",
+		"/Users/mund/Code/Python/trello/trellis/trellis/parser.py",
+		"/Users/mund/Code/Python/trello/trellis/trellis/executioner.py",
+		"/Users/mund/Code/Python/trello/trellis/tests/test_parser.py",
+		"/Users/mund/Code/Python/pypied/trellis/setup.cfg",
+		"/Users/mund/Code/Python/pypied/trellis/setup.py",
+		"/Users/mund/Code/Python/trellis/test_use.py",
+		"/Users/mund/Code/Python/trellis/use.py",
+		"/Users/mund/Code/Python/trellis/trellis.py",
+		"/Users/mund/Code/Python/trellis/tests/test_trellis.py",
+		"/Users/mund/Code/Python/trellis/.travis.yml",
+		"/Users/mund/Code/Python/trellis/requirements.txt",
+		"/Users/mund/Code/Python/trellis/verify.py",
+		"/Users/mund/Code/Python/trellis/test_trellis.py",
+		"/Users/mund/Desktop/lookup.php",
+		"/Users/mund/Code/Python/trellis/executioner.py",
+		"/Users/mund/Code/Python/trellis/README.md",
+		"/Users/mund/Code/Python/trellis/databox.py",
+		"/Users/mund/Code/Python/trellis/viewbox.py",
+		"/Users/mund/Desktop/trellis/.gitignore",
+		"/Users/mund/Desktop/trellis/snips",
+		"/Users/mund/Desktop/trellis/use.py",
+		"/Users/mund/Desktop/trellis/trellis.py",
+		"/Users/mund/Desktop/trellis/trellis_test.py",
+		"/trellis.py",
+		"/Users/mund/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/Users/mund/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/mund/Downloads/threadsample/src/com/example/android/threadsample/RSSPullService.java",
+		"/Users/mund/Downloads/threadsample/src/com/example/android/threadsample/RSSPullParser.java",
+		"/Users/mund/Downloads/threadsample/src/com/example/android/threadsample/ProgressNotifier.java",
+		"/Users/mund/Downloads/threadsample/src/com/example/android/threadsample/PhotoView.java",
+		"/Users/mund/Downloads/threadsample/src/com/example/android/threadsample/PhotoThumbnailFragment.java",
+		"/Users/mund/Downloads/threadsample/src/com/example/android/threadsample/PhotoTask.java",
+		"/Users/mund/Downloads/threadsample/src/com/example/android/threadsample/PhotoManager.java",
+		"/Users/mund/Downloads/threadsample/src/com/example/android/threadsample/PhotoFragment.java",
+		"/Users/mund/Downloads/threadsample/src/com/example/android/threadsample/PhotoDownloadRunnable.java",
+		"/Users/mund/Downloads/threadsample/src/com/example/android/threadsample/PhotoDecodeRunnable.java",
+		"/Users/mund/Downloads/threadsample/src/com/example/android/threadsample/DisplayActivity.java",
+		"/Users/mund/Downloads/threadsample/src/com/example/android/threadsample/DataProviderContract.java",
+		"/Users/mund/Downloads/threadsample/src/com/example/android/threadsample/DataProvider.java",
+		"/Users/mund/Downloads/threadsample/src/com/example/android/threadsample/Constants.java",
+		"/Users/mund/Downloads/threadsample/src/com/example/android/threadsample/BroadcastNotifier.java",
+		"/Users/cabbage/Desktop/play.rs"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"Non",
+			"\n			",
+			"trellis.",
+			"could not find list",
+			"could not find list	",
+			"could not find list",
+			"list_all_the_things",
+			"Q"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "trellis/trellis.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2233,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								600,
+								600
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 271.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "trellis/boards.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3502,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								532,
+								532
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 74.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 100.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "trellis.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 163.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
