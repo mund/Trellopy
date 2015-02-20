@@ -20,9 +20,9 @@ Actions which can be performed on each item include:
         reordered within a list,
         moved to another list
     Members can be:
-        created,
-        renamed,
-        archived,
+        ✓created,
+        ✓renamed,
+        ✓archived,
         assigned to cards
     Labels can be:
         renamed,
@@ -31,18 +31,34 @@ Actions which can be performed on each item include:
 """
 
 
-class BoardController(object):
+class Controller(object):
     def __init__(self):
         pass
+
+    def new_board(self, board_name):
+        return Board(board_name)
 
     def get_board(self, board_name):
         return Board(board_name)
 
-    def display_all(self):
+    def show_boards(self):
         self._operator = Operator()
         everything = self._operator.gimme_everything()
         for each in everything:
             print each
+
+    def new_member(self, member_name):
+        return Member(member_name)
+
+    def get_member(self, member_name):
+        return Member(member_name)
+
+    def show_members(self):
+        self._operator = Operator()
+        everybody = self._operator.gimme_everybody()
+        for body in everybody:
+            print body
+
     # def get_board(self, board_name):
     #     pass
     #     # Get from DB
