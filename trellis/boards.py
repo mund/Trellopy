@@ -39,6 +39,12 @@ class Board(object):
         self._operator.update_board(self.board)
         return new_list_item
 
+    def save_edited_list(self, list_item):
+        for each_list in self.board['lists']:
+            if each_list['name'] == list_item.lizt['name']:
+                each_list = list_item.lizt
+        self._operator.update_board(self.board)
+
     def get_list(self, list_name):
         for lizt in self.board['lists']:
             if lizt['name'] == list_name:
@@ -56,26 +62,6 @@ class Board(object):
 
     def update_board(self):
         self._operator.update_board(self.board)
-
-    # def show(self):
-    #     print "Board Name:", self.name
-    #     if self.board_list:
-    #         print "  [LISTS]"
-    #         for each_list in self.board_list:
-    #             # if each_list:
-    #             print "  ", each_list.show()
-
-    # def get_list_order(self):
-    #     return self.board_list
-
-    # def set_list_order(self, order):
-    #     print "New order:", order
-
-    # def save(self):
-    #     return True
-
-    # def itself(self):
-    #     return self
 
 
 class BoardList(object):
@@ -109,56 +95,38 @@ class BoardList(object):
         return self
 
     def add_card(self, card_name):
-        if not self.list_cards:
-            self.list_cards = []
+        if not self.lizt['cards']:
+            self.lizt['cards'] = []
         new_card = BoardListCard(card_name)
-        self.list_cards.append(new_card)
+        self.lizt['cards'].append(new_card.card)
         return new_card
 
-    def show(self):
-        print "  List Name:", self.name
-        if self.list_cards:
-            for each_card in self.list_cards:
-                print "    ", each_card
+    def get_card(self, card_name):
+        if self.lizt['cards']:
+            for card in self.lizt['cards']:
+                if card['name'] == card_name:
+                    return BoardListCard(card_name, data=card)
 
     def __repr__(self):
         return "  <List: " + self.lizt['name']+">"
 
 
 class BoardListCard(object):
-    """docstring for BoardListCard"""
-    def __init__(self, name):
-        self.name = name
-        self.feat = None
+    """
+    CARD:   This is implemented as a simple dict.
+            The property "name" must exist, as all
+            cards must have a name.
+    """
+    def __init__(self, name, data=None):
+        self.card = {}
+        self.card['name'] = name
+        self.card['archived'] = False
+        if data:
+            self.card = data
 
     def rename(self, new_name):
-        self.name = new_name
+        self.card['name'] = new_name
         return self
 
-    def add_feature(self, features):
-        # `features` must be dict
-        if not self.feat:
-            self.feat = []
-        self.feat.append(features)
-
-    def archive(self, name):
-        print "Archiving card", name
-
-    def assign_to(self, member_name):
-        print "Assigning", self.name, "to", member_name
-
-    def mark_with(self, label_name):
-        print "Marking", self.name, "as", label_name
-
-    def __repr__(self):
-        return "    <Card: "+self.name+">"
-
-    def __str__(self):
-        return "    Card: "+self.name
-
-    def show(self):
-        # if self.name:
-        print "    Card Name:", self.name
-        if self.features:
-            for key, value in features:
-                print key, value
+    def archive(self):
+        self.card['archived'] = True

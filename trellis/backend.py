@@ -26,3 +26,6 @@ class Operator(object):
         else:
             spec['name'] = board_data['name']
         self.boards.update(spec, board_data)
+
+    def gimme_everything(self):
+        return self.boards.find()

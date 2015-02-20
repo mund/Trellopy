@@ -10,13 +10,13 @@ Actions which can be performed on each item include:
         ✓archived
     Lists can be:
         ✓created,
-        archived,
-        renamed,
+        ✓archived,
+        ✓renamed,
         reordered
     Cards can be:
-        created,
-        archived,
-        renamed,
+        ✓created,
+        ✓archived,
+        ✓renamed,
         reordered within a list,
         moved to another list
     Members can be:
@@ -33,12 +33,16 @@ Actions which can be performed on each item include:
 
 class BoardController(object):
     def __init__(self):
-        self._operator = Operator()
+        pass
 
     def get_board(self, board_name):
         return Board(board_name)
 
-
+    def display_all(self):
+        self._operator = Operator()
+        everything = self._operator.gimme_everything()
+        for each in everything:
+            print each
     # def get_board(self, board_name):
     #     pass
     #     # Get from DB
