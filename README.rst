@@ -20,4 +20,4 @@ A Python mockup of Trello with CLI
 Features
 --------
 
-* TODO
+* A Trello mockup 

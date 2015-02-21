@@ -18,7 +18,7 @@ Actions which can be performed on each item include:
         ✓archived,
         ✓renamed,
         reordered within a list,
-        moved to another list
+        ✓moved to another list
     Members can be:
         ✓created,
         ✓renamed,
