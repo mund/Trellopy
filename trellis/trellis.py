@@ -33,19 +33,26 @@ Actions which can be performed on each item include:
 
 class Controller(object):
     def __init__(self):
-        pass
+        self._operator = Operator()
 
     def new_board(self, board_name):
         return Board(board_name)
 
     def get_board(self, board_name):
-        return Board(board_name)
+        board_data = self._operator.get_board(board_name)
+        return Board(board_name, board_data)
+        # return Board(board_name)
 
     def show_boards(self):
-        self._operator = Operator()
         everything = self._operator.gimme_everything()
         for each in everything:
-            print each
+            print "Board Name:", each['name']
+            print "Archived:  ", each['archived']
+            all_lists = each['lists']
+            if all_lists:
+                for single in all_lists:
+                    print "  List Name:", single['name']
+            # print "Lists:     ", each['lists']
 
     def new_member(self, member_name):
         return Member(member_name)
@@ -54,7 +61,6 @@ class Controller(object):
         return Member(member_name)
 
     def show_members(self):
-        self._operator = Operator()
         everybody = self._operator.gimme_everybody()
         for body in everybody:
             print body
