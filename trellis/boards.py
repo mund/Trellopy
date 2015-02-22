@@ -47,6 +47,22 @@ class Board(object):
                 list_from_dict = BoardList(from_dict=lizt)
                 return list_from_dict
 
+    def get_order(self):
+        all_lists = self.board['lists']
+        for each in all_lists:
+            index = all_lists.index(each)
+            print index, each['name']
+
+    def reorder(self, new_order):
+        if isinstance(new_order, list):
+            all_lists = self.board['lists']
+            all_lists = [all_lists[idx] for idx in new_order]
+            for each in all_lists:
+                index = all_lists.index(each)
+                print index, each['name']
+            self.board['lists'] = all_lists
+            self._operator.update_board(self.board)
+
     def in_database(self, name):
         return self._operator.get_board(name)
 
