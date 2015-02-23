@@ -27,7 +27,12 @@ Get an instance of the controller like so:
 
 boards.py
 ---------
-When initialized, a simple dict is saved to the database.
+Once we have an instance of Controller as described above, operations of boards can be done. When a new board is initialized, a simple dict is saved to the database. The names of the boards must be unique.
+
+>>> import trellopy
+>>> controller = trellopy.Controller()
+>>> board_1 = controller.new_board('Board')
+>>> board_2 = controller.get_board('Bored')
 
 .. autoclass:: trellopy.boards.Board
   :members:
@@ -36,13 +41,24 @@ When initialized, a simple dict is saved to the database.
 
 A List class is represented as follows in the database.
 
+>>> import trellopy
+>>> controller = trellopy.Controller()
+>>> board_1 = controller.new_board('Board')
+>>> list_1 = board_1.get_list('List')
+
 .. autoclass:: trellopy.boards.BoardList
   :members:
   :special-members: __init__
 
 
 This is implemented as a simple dict. The property "name" must exist, as all cards must have a name.
-  
+
+>>> import trellopy
+>>> controller = trellopy.Controller()
+>>> board_1 = controller.new_board('Board')
+>>> list_1 = board_1.get_list('List')
+>>> card_1 = list_1.get_card('Card')
+
 .. autoclass:: trellopy.boards.BoardListCard
   :members:
   :special-members: __init__

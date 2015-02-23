@@ -80,8 +80,8 @@ show all members.</p>
 <dd><dl class="method">
 <dt id="trellopy.trellopy.Controller.__init__">
 <tt class="descname">__init__</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/trellopy/trellopy.html#Controller.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.trellopy.Controller.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initializes a Controller class. It consists of a single <strong>_operator</strong>
-instance</p>
+<dd><p>Initializes a Controller class. It consists of a single <em>_operator</em>
+instance:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">_operator</span> <span class="o">=</span> <span class="n">Operator</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -188,7 +188,13 @@ instance</p>
 </div>
 <div class="section" id="boards-py">
 <h2>boards.py<a class="headerlink" href="#boards-py" title="Permalink to this headline">¶</a></h2>
-<p>When initialized, a simple dict is saved to the database.</p>
+<p>Once we have an instance of Controller as described above, operations of boards can be done. When a new board is initialized, a simple dict is saved to the database. The names of the boards must be unique.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">trellopy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">controller</span> <span class="o">=</span> <span class="n">trellopy</span><span class="o">.</span><span class="n">Controller</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">board_1</span> <span class="o">=</span> <span class="n">controller</span><span class="o">.</span><span class="n">new_board</span><span class="p">(</span><span class="s">&#39;Board&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">board_2</span> <span class="o">=</span> <span class="n">controller</span><span class="o">.</span><span class="n">get_board</span><span class="p">(</span><span class="s">&#39;Bored&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="class">
 <dt id="trellopy.boards.Board">
 <em class="property">class </em><tt class="descclassname">trellopy.boards.</tt><tt class="descname">Board</tt><big>(</big><em>name</em>, <em>data=None</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#Board"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.Board" title="Permalink to this definition">¶</a></dt>
@@ -196,70 +202,162 @@ instance</p>
 <dt id="trellopy.boards.Board.__init__">
 <tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>data=None</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#Board.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.Board.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initializes an Operator instance. The entire board is represented
-as a dict with the following attributes and defaults:
-:name: Name of the board
-:lists: initialized as &#8220;None&#8221;
-:archived: initialized as &#8220;False&#8221;
-:labels: initialized as &#8220;None&#8221;</p>
+as a dict with the following attributes and defaults:</p>
+<div class="highlight-python"><div class="highlight"><pre>self.board = {}
+self.board[&#39;name&#39;]        : Name of the board
+self.board[&#39;lists&#39;]       : initialized as &quot;None&quot;
+self.board[&#39;archived&#39;]    : initialized as &quot;False&quot;
+self.board[&#39;labels&#39;]      : initialized as &quot;None&quot;
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>str.</em>) &#8211; Name of the board</li>
+<li><strong>data</strong> (<em>dict.</em>) &#8211; Populate the board with data</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="trellopy.boards.Board.add_label">
 <tt class="descname">add_label</tt><big>(</big><em>label_name</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#Board.add_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.Board.add_label" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a label to the board</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>label_name</strong> (<em>str.</em>) &#8211; The name of label</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="trellopy.boards.Board.add_list">
 <tt class="descname">add_list</tt><big>(</big><em>list_name</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#Board.add_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.Board.add_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a list to the board</p>
+<dd><p>Add a list to the board. This method updates the board.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>list_name</strong> (<em>str.</em>) &#8211; Name of the list</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">List as an instance of <cite>BoardList</cite></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="trellopy.boards.Board.archive">
 <tt class="descname">archive</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#Board.archive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.Board.archive" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets the archived flag to True</p>
+<dd><p>Sets the archived flag to True. This method updates the board.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>None</strong> &#8211; Call it like it is.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="trellopy.boards.Board.get_list">
 <tt class="descname">get_list</tt><big>(</big><em>list_name</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#Board.get_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.Board.get_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a list from the board</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>list_name</strong> (<em>str.</em>) &#8211; Name of the list</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">List as an instance of <cite>BoardList</cite></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="trellopy.boards.Board.get_order">
 <tt class="descname">get_order</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#Board.get_order"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.Board.get_order" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the order of the lists in board</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>None</strong> &#8211; Call it like it is.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="trellopy.boards.Board.in_database">
 <tt class="descname">in_database</tt><big>(</big><em>name</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#Board.in_database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.Board.in_database" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if baord is already in the database</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>str.</em>) &#8211; Name of the board</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if board exists, False if it does not.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="trellopy.boards.Board.rename">
 <tt class="descname">rename</tt><big>(</big><em>new_name</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#Board.rename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.Board.rename" title="Permalink to this definition">¶</a></dt>
-<dd><p>Renames the board</p>
+<dd><p>Renames the board. This method updates the board.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_name</strong> (<em>str.</em>) &#8211; The new name of board.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="trellopy.boards.Board.rename_label">
 <tt class="descname">rename_label</tt><big>(</big><em>label</em>, <em>new_name</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#Board.rename_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.Board.rename_label" title="Permalink to this definition">¶</a></dt>
 <dd><p>Rename the label on the board</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>label</strong> (<em>str.</em>) &#8211; The original name of label</li>
+<li><strong>new_name</strong> (<em>str.</em>) &#8211; The new name of label</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="trellopy.boards.Board.reorder">
 <tt class="descname">reorder</tt><big>(</big><em>new_order</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#Board.reorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.Board.reorder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reorder the lists in the board.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">board</span><span class="o">.</span><span class="n">reorder</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_order</strong> &#8211; A list of indices.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_order</strong> (<em>list.</em>) &#8211; A list of indices</td>
 </tr>
 </tbody>
 </table>
@@ -268,12 +366,18 @@ as a dict with the following attributes and defaults:
 <dl class="method">
 <dt id="trellopy.boards.Board.update_board">
 <tt class="descname">update_board</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#Board.update_board"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.Board.update_board" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update the board in dictionary.</p>
+<dd><p>Update the board in dictionary. Call this function to update lists.</p>
 </dd></dl>
 
 </dd></dl>
 
 <p>A List class is represented as follows in the database.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">trellopy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">controller</span> <span class="o">=</span> <span class="n">trellopy</span><span class="o">.</span><span class="n">Controller</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">board_1</span> <span class="o">=</span> <span class="n">controller</span><span class="o">.</span><span class="n">new_board</span><span class="p">(</span><span class="s">&#39;Board&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">list_1</span> <span class="o">=</span> <span class="n">board_1</span><span class="o">.</span><span class="n">get_list</span><span class="p">(</span><span class="s">&#39;List&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="class">
 <dt id="trellopy.boards.BoardList">
 <em class="property">class </em><tt class="descclassname">trellopy.boards.</tt><tt class="descname">BoardList</tt><big>(</big><em>from_dict=None</em>, <em>*tuples</em>, <em>**dicts</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#BoardList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.BoardList" title="Permalink to this definition">¶</a></dt>
@@ -282,31 +386,98 @@ as a dict with the following attributes and defaults:
 <tt class="descname">__init__</tt><big>(</big><em>from_dict=None</em>, <em>*tuples</em>, <em>**dicts</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#BoardList.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.BoardList.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Represents each list in a board. Cards tied to this list is
 implemented as a list of dicts. The list object itself is represented
-as a dict too. A board has a list of these lists, and is called <cite>lizt</cite>.</p>
+as a dict too.</p>
+<div class="highlight-python"><div class="highlight"><pre>self.lizt = {}
+self.lizt[&#39;board&#39;]      : Board the list belongs to
+self.lizt[&#39;name&#39;]       : Name of the list
+self.lizt[&#39;cards&#39;]      : List of cards associated. Default is None
+self.lizt[&#39;archived&#39;]   : The archive flag. Default is False.
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>from_dict</strong> (<em>dict.</em>) &#8211; If the list is to be pre-populated from a dict.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="trellopy.boards.BoardList.add_card">
 <tt class="descname">add_card</tt><big>(</big><em>card</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#BoardList.add_card"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.BoardList.add_card" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a card to the list</p>
+<dd><p>Add a card to the list. If the card is of type string, a new
+card is created. If it is an instance of <cite>BoardListCard</cite> then a copy
+of it appended to the current list of cards.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">list_one</span> <span class="o">=</span> <span class="n">board_one</span><span class="o">.</span><span class="n">get_list</span><span class="p">(</span><span class="s">&#39;Simplist&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">list_two</span> <span class="o">=</span> <span class="n">board_two</span><span class="o">.</span><span class="n">get_list</span><span class="p">(</span><span class="s">&#39;Unlisted&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">card_one</span> <span class="o">=</span> <span class="n">list_one</span><span class="o">.</span><span class="n">get_card</span><span class="p">(</span><span class="s">&#39;Simple Card&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">list_two</span><span class="o">.</span><span class="n">add_card</span><span class="p">(</span><span class="n">card_one</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">list_two</span><span class="o">.</span><span class="n">add_card</span><span class="p">(</span><span class="s">&#39;Another Card&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>card</strong> (str. or <cite>BoardListCard</cite>) &#8211; A card instance or name of card</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="trellopy.boards.BoardList.archive">
 <tt class="descname">archive</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#BoardList.archive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.BoardList.archive" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the value of key <cite>archive</cite> to True</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>None</strong> &#8211; Call it like it is.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="trellopy.boards.BoardList.get_card">
 <tt class="descname">get_card</tt><big>(</big><em>card_name</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#BoardList.get_card"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.BoardList.get_card" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a card from the list</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>card_name</strong> (<em>str.</em>) &#8211; The name of card</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Instance of BoardListCard</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="trellopy.boards.BoardList.get_order">
 <tt class="descname">get_order</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#BoardList.get_order"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.BoardList.get_order" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get order of cards in list</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sample_list</span><span class="o">.</span><span class="n">get_order</span><span class="p">()</span>
+<span class="go">0 Card A</span>
+<span class="go">1 Another Card</span>
+<span class="go">2 Cardigan</span>
+<span class="go">3 Red Card</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>None</strong> &#8211; Call it like it is.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">An output of lists</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -319,6 +490,14 @@ as a dict too. A board has a list of these lists, and is called <cite>lizt</cite
 <dt id="trellopy.boards.BoardList.reorder">
 <tt class="descname">reorder</tt><big>(</big><em>new_order</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#BoardList.reorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.BoardList.reorder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reorder the cards in list</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_order</strong> (<em>list.</em>) &#8211; New order of cards, as a list of indices.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -330,19 +509,48 @@ as a dict too. A board has a list of these lists, and is called <cite>lizt</cite
 </dd></dl>
 
 <p>This is implemented as a simple dict. The property &#8220;name&#8221; must exist, as all cards must have a name.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">trellopy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">controller</span> <span class="o">=</span> <span class="n">trellopy</span><span class="o">.</span><span class="n">Controller</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">board_1</span> <span class="o">=</span> <span class="n">controller</span><span class="o">.</span><span class="n">new_board</span><span class="p">(</span><span class="s">&#39;Board&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">list_1</span> <span class="o">=</span> <span class="n">board_1</span><span class="o">.</span><span class="n">get_list</span><span class="p">(</span><span class="s">&#39;List&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">card_1</span> <span class="o">=</span> <span class="n">list_1</span><span class="o">.</span><span class="n">get_card</span><span class="p">(</span><span class="s">&#39;Card&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="class">
 <dt id="trellopy.boards.BoardListCard">
 <em class="property">class </em><tt class="descclassname">trellopy.boards.</tt><tt class="descname">BoardListCard</tt><big>(</big><em>name</em>, <em>data=None</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#BoardListCard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.BoardListCard" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="trellopy.boards.BoardListCard.__init__">
 <tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>data=None</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#BoardListCard.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.BoardListCard.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initializes the damn card</p>
+<dd><p>Initializes the card as a dict.</p>
+<div class="highlight-python"><div class="highlight"><pre>self.card  = {}
+self.card[&#39;name&#39;]       : Name of card
+self.card[&#39;archived&#39;]   : Archive flag.
+                          Default is False
+self.card[&#39;labeled&#39;]    : Label attached to card.
+                          Default is None
+self.card[&#39;assigned&#39;]   : List of members the card is assigned to.
+                          Default is None.
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>str</em>) &#8211; Name of card</li>
+<li><strong>data</strong> (<em>dict</em>) &#8211; Data to be pre-populated</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="trellopy.boards.BoardListCard.archive">
 <tt class="descname">archive</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#BoardListCard.archive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.BoardListCard.archive" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets the value of key name to <cite>new_name</cite></p>
+<dd><p>Sets the value of key archived to True</p>
 </dd></dl>
 
 <dl class="method">
