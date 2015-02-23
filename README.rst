@@ -18,3 +18,24 @@ Requirements
 ============
 * PyMongo (and of course, MongoDB)
 * Nose (for testing)
+
+Example
+========
+>>> import trellopy
+>>> controller = trellopy.Controller()
+>>> board = controller.add_board('Board')
+>>> list1 = board.add_list('List One')
+>>> list2 = board.add_list('List Two')
+>>> list3 = board.add_list('List Three')
+>>> list4 = board.add_list('List Four')
+>>> carda = list1.add_card('Card A')
+>>> cardb = list1.add_card('Card B')
+>>> cardc = list1.add_card('Card C')
+>>> list2.add_card(carda)
+>>> list3.rename('List 3')
+>>> list4.archive()
+>>> board.get_order()
+>>> board.reorder([2,0,3,1])
+>>> list1.get_order()
+>>> list2.reorder([2,0,1])
+>>> person = controller.new_member('Person')
