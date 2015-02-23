@@ -25,7 +25,7 @@ Actions which can be performed on each item include:
         ✓archived,
         ✓assigned to cards
     Labels can be:
-        renamed,
+        ✓renamed,
         ✓assigned to cards,
         ✓One label per card
 """

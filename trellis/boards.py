@@ -17,6 +17,7 @@ class Board(object):
             self.board['name'] = name
             self.board['lists'] = None
             self.board['archived'] = False
+            self.board['labels'] = None
             self._operator.save_board(self.board)
         elif not data:
             self.board = self._operator.get_board(name)
@@ -62,6 +63,17 @@ class Board(object):
                 print index, each['name']
             self.board['lists'] = all_lists
             self._operator.update_board(self.board)
+
+    def add_label(self, label_name):
+        if not self.boards['labels']:
+            self.boards['labels'] = []
+        if not len(self.boards['labels']) > 6:
+            self.boards['label'].append(label_name)
+
+    def rename_label(self, label, new_name):
+        if label in self.boards['labels']:
+            idx = self.boards['labels'].index(label)
+            self.boards['labels'][idx] = new_name
 
     def in_database(self, name):
         return self._operator.get_board(name)
