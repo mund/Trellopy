@@ -12,22 +12,22 @@ Actions which can be performed on each item include:
         ✓created,
         ✓archived,
         ✓renamed,
-        reordered
+        ✓reordered
     Cards can be:
         ✓created,
         ✓archived,
         ✓renamed,
-        reordered within a list,
+        ✓reordered within a list,
         ✓moved to another list
     Members can be:
         ✓created,
         ✓renamed,
         ✓archived,
-        assigned to cards
+        ✓assigned to cards
     Labels can be:
         renamed,
-        assigned to cards,
-        One label per card
+        ✓assigned to cards,
+        ✓One label per card
 """
 
 

@@ -117,6 +117,22 @@ class BoardList(object):
                 if card['name'] == card_name:
                     return BoardListCard(card_name, data=card)
 
+    def get_order(self):
+        all_cards = self.lizt['cards']
+        for each in all_cards:
+            index = all_cards.index(each)
+            print index, each['name']
+
+    def reorder(self, new_order):
+        if isinstance(new_order, list):
+            all_cards = self.lizt['cards']
+            all_cards = [all_cards[idx] for idx in new_order]
+            for each in all_cards:
+                index = all_cards.index(each)
+                print index, each['name']
+            self.lizt['cards'] = all_cards
+            # self._operator.update_board(self.board)
+
     def save(self):
         board = self._operator.get_board(self.lizt['board'])
         for each in board['lists']:
@@ -134,6 +150,8 @@ class BoardListCard(object):
         self.card = {}
         self.card['name'] = name
         self.card['archived'] = False
+        self.card['assigned'] = None
+        self.card['labeled'] = None
         if data:
             self.card = data
 
@@ -143,3 +161,11 @@ class BoardListCard(object):
     def rename(self, new_name):
         self.card['name'] = new_name
         return self
+
+    def assign(self, member_name):
+        if not self.card['assigned']:
+            self.card['assigned'] = []
+        self.card.assigned.append(member_name)
+
+    def label(self, label_name):
+        self.card['labeled'] = label_name
