@@ -1,14 +1,13 @@
 ===============================
-trellopy
+Trellopy
 ===============================
-
 
 A Python mockup of Trello with CLI
 
 * Free software: BSD license
-* Documentation: https://trellis.readthedocs.org.
+* Documentation: https://trellopy.readthedocs.org.
 
-Features
+Requirements
 --------
-
-* A Trello mockup 
+* PyMongo (and of course, MongoDB)
+* Nose (for testing)

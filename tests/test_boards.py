@@ -4,7 +4,7 @@ test_trellis
 
 Tests for `boards` module.
 """
-from trellis.boards import Board
+from trellopy.boards import Board
 
 
 class TestBoards():

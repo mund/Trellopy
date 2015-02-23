@@ -25,23 +25,23 @@ test_requirements = [
 ]
 
 setup(
-    name='trellis',
+    name='trellopy',
     version='0.0.0',
     description="A Python mockup of Trello with CLI",
     long_description=readme + '\n\n' + history,
     author="Amol Mundayoor",
     author_email='amol.com@gmail.com',
-    url='https://github.com/mund/trellis',
+    url='https://github.com/mund/trellopy',
     packages=[
-        'trellis',
+        'trellopy',
     ],
-    package_dir={'trellis':
-                 'trellis'},
+    package_dir={'trellopy':
+                 'trellopy'},
     include_package_data=True,
     install_requires=requirements,
     license="BSD",
     zip_safe=False,
-    keywords='trellis',
+    keywords='trellopy',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
