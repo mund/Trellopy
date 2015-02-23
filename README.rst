@@ -9,7 +9,7 @@
 Trellopy
 ===============================
 
-A Python mockup of Trello with CLI
+A Python mockup of Trello with CLI. Trello is a very popular (and powerful) todo-list / task board. 
 
 * Free software: BSD license
 * Documentation: https://trellopy.readthedocs.org.
