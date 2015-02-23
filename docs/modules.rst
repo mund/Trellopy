@@ -9,7 +9,7 @@ The main modules in this python package are:
 
 trellopy.py
 -----------
-.. automodule:: trellopy.trellopy
+.. autoclass:: trellopy.trellopy.Controller
   :members:
   :special-members: __init__
 
@@ -29,12 +29,12 @@ boards.py
 
 members.py
 ----------
-.. automodule:: trellopy.members
+.. autoclass:: trellopy.members.Member
   :members: 
   :special-members: __init__
 
 backend.py
 ----------
-.. automodule:: trellopy.backend
+.. autoclass:: trellopy.backend.Operator
   :members:
   :special-members: __init__
