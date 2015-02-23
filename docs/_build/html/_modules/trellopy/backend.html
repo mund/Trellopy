@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>trellopy.backend &mdash; trellopy 0.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="trellopy 0.0.0 documentation" href="../../index.html" />
+    <link rel="up" title="trellopy" href="../trellopy.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">trellopy 0.0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../trellopy.html" accesskey="U">trellopy</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for trellopy.backend</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. .module:: backend</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">pymongo</span>
+
+
+<div class="viewcode-block" id="Operator"><a class="viewcode-back" href="../../modules.html#trellopy.backend.Operator">[docs]</a><span class="k">class</span> <span class="nc">Operator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is the database operator. Currently only supports MongoDB.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Operator.__init__"><a class="viewcode-back" href="../../modules.html#trellopy.backend.Operator.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Make a connection to the database &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">MongoClient</span><span class="p">(</span><span class="s">&#39;mongodb://localhost:27017&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">potatodb</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">boards</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_db</span><span class="o">.</span><span class="n">boards</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">members</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_db</span><span class="o">.</span><span class="n">members</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">boards</span><span class="o">.</span><span class="n">create_index</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">members</span><span class="o">.</span><span class="n">create_index</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Operator.save_board"><a class="viewcode-back" href="../../modules.html#trellopy.backend.Operator.save_board">[docs]</a>    <span class="k">def</span> <span class="nf">save_board</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board_dict</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Save the board to the database &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">boards</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">board_dict</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Operator.get_board"><a class="viewcode-back" href="../../modules.html#trellopy.backend.Operator.get_board">[docs]</a>    <span class="k">def</span> <span class="nf">get_board</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get a board from the database &quot;&quot;&quot;</span>
+        <span class="n">spec</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="n">board_name</span><span class="p">}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">boards</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Could not find board with name&quot;</span><span class="p">,</span> <span class="n">board_name</span>
+            <span class="k">return</span> <span class="bp">False</span>
+</div>
+<div class="viewcode-block" id="Operator.update_board"><a class="viewcode-back" href="../../modules.html#trellopy.backend.Operator.update_board">[docs]</a>    <span class="k">def</span> <span class="nf">update_board</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board_data</span><span class="p">,</span> <span class="n">board_name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Update the board in the database &quot;&quot;&quot;</span>
+        <span class="n">spec</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">board_name</span><span class="p">:</span>
+            <span class="n">spec</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">board_name</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">spec</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">board_data</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">boards</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">spec</span><span class="p">,</span> <span class="n">board_data</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Operator.gimme_everything"><a class="viewcode-back" href="../../modules.html#trellopy.backend.Operator.gimme_everything">[docs]</a>    <span class="k">def</span> <span class="nf">gimme_everything</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Fetch every board in the database &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">boards</span><span class="o">.</span><span class="n">find</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="Operator.gimme_everybody"><a class="viewcode-back" href="../../modules.html#trellopy.backend.Operator.gimme_everybody">[docs]</a>    <span class="k">def</span> <span class="nf">gimme_everybody</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Fetch every member in the database &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">members</span><span class="o">.</span><span class="n">find</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="Operator.new_member"><a class="viewcode-back" href="../../modules.html#trellopy.backend.Operator.new_member">[docs]</a>    <span class="k">def</span> <span class="nf">new_member</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">member_dict</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Add a member to the database &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">members</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">member_dict</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Operator.update_member"><a class="viewcode-back" href="../../modules.html#trellopy.backend.Operator.update_member">[docs]</a>    <span class="k">def</span> <span class="nf">update_member</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">member_data</span><span class="p">,</span> <span class="n">member_name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Update a member in database &quot;&quot;&quot;</span>
+        <span class="n">spec</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">member_name</span><span class="p">:</span>
+            <span class="n">spec</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">member_name</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">spec</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">member_data</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">members</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">spec</span><span class="p">,</span> <span class="n">member_data</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Operator.get_member"><a class="viewcode-back" href="../../modules.html#trellopy.backend.Operator.get_member">[docs]</a>    <span class="k">def</span> <span class="nf">get_member</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">member_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get a member from the database &quot;&quot;&quot;</span>
+        <span class="n">spec</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="n">member_name</span><span class="p">}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">members</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Could not find member with name&quot;</span><span class="p">,</span> <span class="n">member_name</span>
+            <span class="k">return</span> <span class="bp">False</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">trellopy 0.0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../trellopy.html" >trellopy</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Amol Mundayoor.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

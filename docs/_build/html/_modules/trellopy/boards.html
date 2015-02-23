@@ -1,0 +1,308 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>trellopy.boards &mdash; trellopy 0.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="trellopy 0.0.0 documentation" href="../../index.html" />
+    <link rel="up" title="trellopy" href="../trellopy.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">trellopy 0.0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../trellopy.html" accesskey="U">trellopy</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for trellopy.boards</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  ..  .module:: boards</span>
+<span class="sd">      :synopsis: The main class that defines boards, lists and cards.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">backend</span> <span class="kn">import</span> <span class="n">Operator</span>
+
+
+<div class="viewcode-block" id="Board"><a class="viewcode-back" href="../../modules.html#trellopy.boards.Board">[docs]</a><span class="k">class</span> <span class="nc">Board</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    When initialized, a simple dict is saved to the database.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Board.__init__"><a class="viewcode-back" href="../../modules.html#trellopy.boards.Board.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Initializes an Operator instance. The entire board is represented</span>
+<span class="sd">            as a dict with the following attributes and defaults:</span>
+<span class="sd">                :name: Name of the board</span>
+<span class="sd">                :lists: initialized as &quot;None&quot;</span>
+<span class="sd">                :archived: initialized as &quot;False&quot;</span>
+<span class="sd">                :labels: initialized as &quot;None&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_operator</span> <span class="o">=</span> <span class="n">Operator</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_database</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">board</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="s">&#39;lists&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="s">&#39;archived&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="s">&#39;labels&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_operator</span><span class="o">.</span><span class="n">save_board</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">board</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operator</span><span class="o">.</span><span class="n">get_board</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">data</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">board</span> <span class="o">=</span> <span class="n">data</span>
+</div>
+<div class="viewcode-block" id="Board.archive"><a class="viewcode-back" href="../../modules.html#trellopy.boards.Board.archive">[docs]</a>    <span class="k">def</span> <span class="nf">archive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Sets the archived flag to True &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="s">&#39;archived&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_operator</span><span class="o">.</span><span class="n">update_board</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Board.rename"><a class="viewcode-back" href="../../modules.html#trellopy.boards.Board.rename">[docs]</a>    <span class="k">def</span> <span class="nf">rename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Renames the board &quot;&quot;&quot;</span>
+        <span class="n">old_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_operator</span><span class="o">.</span><span class="n">update_board</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">,</span> <span class="n">old_name</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Board.add_list"><a class="viewcode-back" href="../../modules.html#trellopy.boards.Board.add_list">[docs]</a>    <span class="k">def</span> <span class="nf">add_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Add a list to the board &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="s">&#39;lists&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="s">&#39;lists&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">parent_board</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
+        <span class="n">new_list_item</span> <span class="o">=</span> <span class="n">BoardList</span><span class="p">(</span><span class="n">board</span><span class="o">=</span><span class="n">parent_board</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">list_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="s">&#39;lists&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_list_item</span><span class="o">.</span><span class="n">lizt</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_operator</span><span class="o">.</span><span class="n">update_board</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new_list_item</span>
+</div>
+<div class="viewcode-block" id="Board.get_list"><a class="viewcode-back" href="../../modules.html#trellopy.boards.Board.get_list">[docs]</a>    <span class="k">def</span> <span class="nf">get_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get a list from the board &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">lizt</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="s">&#39;lists&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">lizt</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">list_name</span><span class="p">:</span>
+                <span class="n">list_from_dict</span> <span class="o">=</span> <span class="n">BoardList</span><span class="p">(</span><span class="n">from_dict</span><span class="o">=</span><span class="n">lizt</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">list_from_dict</span>
+</div>
+<div class="viewcode-block" id="Board.get_order"><a class="viewcode-back" href="../../modules.html#trellopy.boards.Board.get_order">[docs]</a>    <span class="k">def</span> <span class="nf">get_order</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get the order of the lists in board &quot;&quot;&quot;</span>
+        <span class="n">all_lists</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="s">&#39;lists&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">all_lists</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">all_lists</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">each</span><span class="p">)</span>
+            <span class="k">print</span> <span class="n">index</span><span class="p">,</span> <span class="n">each</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
+</div>
+<div class="viewcode-block" id="Board.reorder"><a class="viewcode-back" href="../../modules.html#trellopy.boards.Board.reorder">[docs]</a>    <span class="k">def</span> <span class="nf">reorder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_order</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Reorder the lists in the board.</span>
+
+<span class="sd">            :param new_order: A list of indices.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_order</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">all_lists</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="s">&#39;lists&#39;</span><span class="p">]</span>
+            <span class="n">all_lists</span> <span class="o">=</span> <span class="p">[</span><span class="n">all_lists</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">new_order</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">all_lists</span><span class="p">:</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="n">all_lists</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">each</span><span class="p">)</span>
+                <span class="k">print</span> <span class="n">index</span><span class="p">,</span> <span class="n">each</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="s">&#39;lists&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">all_lists</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_operator</span><span class="o">.</span><span class="n">update_board</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Board.add_label"><a class="viewcode-back" href="../../modules.html#trellopy.boards.Board.add_label">[docs]</a>    <span class="k">def</span> <span class="nf">add_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Add a label to the board &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">boards</span><span class="p">[</span><span class="s">&#39;labels&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">boards</span><span class="p">[</span><span class="s">&#39;labels&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">boards</span><span class="p">[</span><span class="s">&#39;labels&#39;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">6</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">boards</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label_name</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Board.rename_label"><a class="viewcode-back" href="../../modules.html#trellopy.boards.Board.rename_label">[docs]</a>    <span class="k">def</span> <span class="nf">rename_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">new_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Rename the label on the board &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">boards</span><span class="p">[</span><span class="s">&#39;labels&#39;</span><span class="p">]:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">boards</span><span class="p">[</span><span class="s">&#39;labels&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">boards</span><span class="p">[</span><span class="s">&#39;labels&#39;</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_name</span>
+</div>
+<div class="viewcode-block" id="Board.in_database"><a class="viewcode-back" href="../../modules.html#trellopy.boards.Board.in_database">[docs]</a>    <span class="k">def</span> <span class="nf">in_database</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Check if baord is already in the database &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operator</span><span class="o">.</span><span class="n">get_board</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Board.update_board"><a class="viewcode-back" href="../../modules.html#trellopy.boards.Board.update_board">[docs]</a>    <span class="k">def</span> <span class="nf">update_board</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Update the board in dictionary. &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_operator</span><span class="o">.</span><span class="n">update_board</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="BoardList"><a class="viewcode-back" href="../../modules.html#trellopy.boards.BoardList">[docs]</a><span class="k">class</span> <span class="nc">BoardList</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A List class is represented as follows in the database:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BoardList.__init__"><a class="viewcode-back" href="../../modules.html#trellopy.boards.BoardList.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">from_dict</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">*</span><span class="n">tuples</span><span class="p">,</span> <span class="o">**</span><span class="n">dicts</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Represents each list in a board. Cards tied to this list is</span>
+<span class="sd">        implemented as a list of dicts. The list object itself is represented</span>
+<span class="sd">        as a dict too. A board has a list of these lists, and is called `lizt`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">from_dict</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lizt</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lizt</span><span class="p">[</span><span class="s">&#39;board&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dicts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;board&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lizt</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dicts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lizt</span><span class="p">[</span><span class="s">&#39;cards&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lizt</span><span class="p">[</span><span class="s">&#39;archived&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">if</span> <span class="n">from_dict</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lizt</span> <span class="o">=</span> <span class="n">from_dict</span>
+</div>
+<div class="viewcode-block" id="BoardList.archive"><a class="viewcode-back" href="../../modules.html#trellopy.boards.BoardList.archive">[docs]</a>    <span class="k">def</span> <span class="nf">archive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Sets the value of key `archive` to True &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lizt</span><span class="p">[</span><span class="s">&#39;archived&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">return</span> <span class="bp">self</span>
+</div>
+<div class="viewcode-block" id="BoardList.rename"><a class="viewcode-back" href="../../modules.html#trellopy.boards.BoardList.rename">[docs]</a>    <span class="k">def</span> <span class="nf">rename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Sets the value of key name to `new_name` &quot;&quot;&quot;</span>
+        <span class="n">old_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lizt</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lizt</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_name</span>
+        <span class="k">return</span> <span class="bp">self</span>
+</div>
+<div class="viewcode-block" id="BoardList.add_card"><a class="viewcode-back" href="../../modules.html#trellopy.boards.BoardList.add_card">[docs]</a>    <span class="k">def</span> <span class="nf">add_card</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">card</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Add a card to the list &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">lizt</span><span class="p">[</span><span class="s">&#39;cards&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lizt</span><span class="p">[</span><span class="s">&#39;cards&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">new_card</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">card</span><span class="p">,</span> <span class="n">BoardListCard</span><span class="p">):</span>
+            <span class="n">new_card</span> <span class="o">=</span> <span class="n">card</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">card</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">new_card</span> <span class="o">=</span> <span class="n">BoardListCard</span><span class="p">(</span><span class="n">card</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lizt</span><span class="p">[</span><span class="s">&#39;cards&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_card</span><span class="o">.</span><span class="n">card</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new_card</span>
+</div>
+<div class="viewcode-block" id="BoardList.get_card"><a class="viewcode-back" href="../../modules.html#trellopy.boards.BoardList.get_card">[docs]</a>    <span class="k">def</span> <span class="nf">get_card</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">card_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get a card from the list &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lizt</span><span class="p">[</span><span class="s">&#39;cards&#39;</span><span class="p">]:</span>
+            <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lizt</span><span class="p">[</span><span class="s">&#39;cards&#39;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">card</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">card_name</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">BoardListCard</span><span class="p">(</span><span class="n">card_name</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">card</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BoardList.get_order"><a class="viewcode-back" href="../../modules.html#trellopy.boards.BoardList.get_order">[docs]</a>    <span class="k">def</span> <span class="nf">get_order</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get order of cards in list &quot;&quot;&quot;</span>
+        <span class="n">all_cards</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lizt</span><span class="p">[</span><span class="s">&#39;cards&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">all_cards</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">all_cards</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">each</span><span class="p">)</span>
+            <span class="k">print</span> <span class="n">index</span><span class="p">,</span> <span class="n">each</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
+</div>
+<div class="viewcode-block" id="BoardList.reorder"><a class="viewcode-back" href="../../modules.html#trellopy.boards.BoardList.reorder">[docs]</a>    <span class="k">def</span> <span class="nf">reorder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_order</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Reorder the cards in list &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_order</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">all_cards</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lizt</span><span class="p">[</span><span class="s">&#39;cards&#39;</span><span class="p">]</span>
+            <span class="n">all_cards</span> <span class="o">=</span> <span class="p">[</span><span class="n">all_cards</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">new_order</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">all_cards</span><span class="p">:</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="n">all_cards</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">each</span><span class="p">)</span>
+                <span class="k">print</span> <span class="n">index</span><span class="p">,</span> <span class="n">each</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lizt</span><span class="p">[</span><span class="s">&#39;cards&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">all_cards</span>
+            <span class="c"># self._operator.update_board(self.board)</span>
+</div>
+<div class="viewcode-block" id="BoardList.save"><a class="viewcode-back" href="../../modules.html#trellopy.boards.BoardList.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Save the list to the board &quot;&quot;&quot;</span>
+        <span class="n">board</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operator</span><span class="o">.</span><span class="n">get_board</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lizt</span><span class="p">[</span><span class="s">&#39;board&#39;</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">board</span><span class="p">[</span><span class="s">&#39;lists&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">each</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">lizt</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]:</span>
+                <span class="n">each</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lizt</span>
+
+</div></div>
+<div class="viewcode-block" id="BoardListCard"><a class="viewcode-back" href="../../modules.html#trellopy.boards.BoardListCard">[docs]</a><span class="k">class</span> <span class="nc">BoardListCard</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    CARD:   This is implemented as a simple dict.</span>
+<span class="sd">            The property &quot;name&quot; must exist, as all</span>
+<span class="sd">            cards must have a name.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BoardListCard.__init__"><a class="viewcode-back" href="../../modules.html#trellopy.boards.BoardListCard.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Initializes the damn card &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">card</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">card</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">card</span><span class="p">[</span><span class="s">&#39;archived&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">card</span><span class="p">[</span><span class="s">&#39;assigned&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">card</span><span class="p">[</span><span class="s">&#39;labeled&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">card</span> <span class="o">=</span> <span class="n">data</span>
+</div>
+<div class="viewcode-block" id="BoardListCard.archive"><a class="viewcode-back" href="../../modules.html#trellopy.boards.BoardListCard.archive">[docs]</a>    <span class="k">def</span> <span class="nf">archive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Sets the value of key name to `new_name` &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">card</span><span class="p">[</span><span class="s">&#39;archived&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+</div>
+<div class="viewcode-block" id="BoardListCard.rename"><a class="viewcode-back" href="../../modules.html#trellopy.boards.BoardListCard.rename">[docs]</a>    <span class="k">def</span> <span class="nf">rename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Sets the value of key name to `new_name` &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">card</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_name</span>
+        <span class="k">return</span> <span class="bp">self</span>
+</div>
+<div class="viewcode-block" id="BoardListCard.assign"><a class="viewcode-back" href="../../modules.html#trellopy.boards.BoardListCard.assign">[docs]</a>    <span class="k">def</span> <span class="nf">assign</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">member_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Assign card to a member &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">card</span><span class="p">[</span><span class="s">&#39;assigned&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">card</span><span class="p">[</span><span class="s">&#39;assigned&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">card</span><span class="o">.</span><span class="n">assigned</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">member_name</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BoardListCard.label"><a class="viewcode-back" href="../../modules.html#trellopy.boards.BoardListCard.label">[docs]</a>    <span class="k">def</span> <span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Attach label to card &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">card</span><span class="p">[</span><span class="s">&#39;labeled&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">label_name</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">trellopy 0.0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../trellopy.html" >trellopy</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Amol Mundayoor.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,550 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Modules &mdash; trellopy 0.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="trellopy 0.0.0 documentation" href="index.html" />
+    <link rel="next" title="Contributing" href="contributing.html" />
+    <link rel="prev" title="Usage" href="usage.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="contributing.html" title="Contributing"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="usage.html" title="Usage"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">trellopy 0.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="modules">
+<h1>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h1>
+<dl class="docutils">
+<dt>The main modules in this python package are:</dt>
+<dd><ul class="first last simple">
+<li>trellopy.py - consisting of one Controller class</li>
+<li>boards.py - consisting of one Board, BoardList and BoardListCard classs</li>
+<li>members.py - consisting of one Member class</li>
+<li>backend.py - consisting of one Operator class</li>
+</ul>
+</dd>
+</dl>
+<div class="section" id="module-trellopy.trellopy">
+<span id="trellopy-py"></span><h2>trellopy.py<a class="headerlink" href="#module-trellopy.trellopy" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="trellopy.trellopy.Controller">
+<em class="property">class </em><tt class="descclassname">trellopy.trellopy.</tt><tt class="descname">Controller</tt><a class="reference internal" href="_modules/trellopy/trellopy.html#Controller"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.trellopy.Controller" title="Permalink to this definition">¶</a></dt>
+<dd><p>The controller object is the main interface to the entire package. Use this
+to make new boards, get boards, add new members, show all boards, and to
+show all members.</p>
+<p>Start by importing the python package:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">trellopy</span>
+</pre></div>
+</div>
+<p>Get an instance of the controller like so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">controller</span> <span class="o">=</span> <span class="n">trellopy</span><span class="o">.</span><span class="n">Controller</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="trellopy.trellopy.Controller.__init__">
+<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/trellopy/trellopy.html#Controller.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.trellopy.Controller.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes a connection to the PyMongo Database.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.trellopy.Controller.get_board">
+<tt class="descname">get_board</tt><big>(</big><em>board_name</em><big>)</big><a class="reference internal" href="_modules/trellopy/trellopy.html#Controller.get_board"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.trellopy.Controller.get_board" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the board that has the name <em>board_name</em>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>board_name</strong> &#8211; The name of the board you want to get.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A Board class, with Board.board populated with board data.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.trellopy.Controller.get_member">
+<tt class="descname">get_member</tt><big>(</big><em>member_name</em><big>)</big><a class="reference internal" href="_modules/trellopy/trellopy.html#Controller.get_member"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.trellopy.Controller.get_member" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get existing member with name <em>member_name</em></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>member_name</strong> &#8211; The name of the member.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A Member class, with Members.person populated with name.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.trellopy.Controller.new_board">
+<tt class="descname">new_board</tt><big>(</big><em>board_name</em><big>)</big><a class="reference internal" href="_modules/trellopy/trellopy.html#Controller.new_board"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.trellopy.Controller.new_board" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new board with name <em>board_name</em>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>board_name</strong> &#8211; The name you want the board to have.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A Board class, with name attribute <em>board_name</em>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.trellopy.Controller.new_member">
+<tt class="descname">new_member</tt><big>(</big><em>member_name</em><big>)</big><a class="reference internal" href="_modules/trellopy/trellopy.html#Controller.new_member"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.trellopy.Controller.new_member" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new member with name <em>member_name</em></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>member_name</strong> &#8211; The name of the member.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A Member class, with Members.person populated with name.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.trellopy.Controller.show_boards">
+<tt class="descname">show_boards</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/trellopy/trellopy.html#Controller.show_boards"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.trellopy.Controller.show_boards" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show all the boards in the database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">Takes no arguments, call it like it is.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A somewhat human-friendly listing of all boards.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.trellopy.Controller.show_members">
+<tt class="descname">show_members</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/trellopy/trellopy.html#Controller.show_members"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.trellopy.Controller.show_members" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show all members in the database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">Takes no arguments, call it like it is.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A somewhat human-friendly listing of all members.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="boards-py">
+<h2>boards.py<a class="headerlink" href="#boards-py" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="trellopy.boards.Board">
+<em class="property">class </em><tt class="descclassname">trellopy.boards.</tt><tt class="descname">Board</tt><big>(</big><em>name</em>, <em>data=None</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#Board"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.Board" title="Permalink to this definition">¶</a></dt>
+<dd><p>When initialized, a simple dict is saved to the database.</p>
+<dl class="method">
+<dt id="trellopy.boards.Board.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>data=None</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#Board.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.Board.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes an Operator instance. The entire board is represented
+as a dict with the following attributes and defaults:</p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">name:</th><td class="field-body">Name of the board</td>
+</tr>
+<tr class="field-even field"><th class="field-name">lists:</th><td class="field-body">initialized as &#8220;None&#8221;</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">archived:</th><td class="field-body">initialized as &#8220;False&#8221;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">labels:</th><td class="field-body">initialized as &#8220;None&#8221;</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.boards.Board.add_label">
+<tt class="descname">add_label</tt><big>(</big><em>label_name</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#Board.add_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.Board.add_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a label to the board</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.boards.Board.add_list">
+<tt class="descname">add_list</tt><big>(</big><em>list_name</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#Board.add_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.Board.add_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a list to the board</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.boards.Board.archive">
+<tt class="descname">archive</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#Board.archive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.Board.archive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the archived flag to True</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.boards.Board.get_list">
+<tt class="descname">get_list</tt><big>(</big><em>list_name</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#Board.get_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.Board.get_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list from the board</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.boards.Board.get_order">
+<tt class="descname">get_order</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#Board.get_order"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.Board.get_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the order of the lists in board</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.boards.Board.in_database">
+<tt class="descname">in_database</tt><big>(</big><em>name</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#Board.in_database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.Board.in_database" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if baord is already in the database</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.boards.Board.rename">
+<tt class="descname">rename</tt><big>(</big><em>new_name</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#Board.rename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.Board.rename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renames the board</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.boards.Board.rename_label">
+<tt class="descname">rename_label</tt><big>(</big><em>label</em>, <em>new_name</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#Board.rename_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.Board.rename_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rename the label on the board</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.boards.Board.reorder">
+<tt class="descname">reorder</tt><big>(</big><em>new_order</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#Board.reorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.Board.reorder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reorder the lists in the board.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_order</strong> &#8211; A list of indices.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.boards.Board.update_board">
+<tt class="descname">update_board</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#Board.update_board"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.Board.update_board" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the board in dictionary.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="trellopy.boards.BoardList">
+<em class="property">class </em><tt class="descclassname">trellopy.boards.</tt><tt class="descname">BoardList</tt><big>(</big><em>from_dict=None</em>, <em>*tuples</em>, <em>**dicts</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#BoardList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.BoardList" title="Permalink to this definition">¶</a></dt>
+<dd><p>A List class is represented as follows in the database:</p>
+<dl class="method">
+<dt id="trellopy.boards.BoardList.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>from_dict=None</em>, <em>*tuples</em>, <em>**dicts</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#BoardList.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.BoardList.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents each list in a board. Cards tied to this list is
+implemented as a list of dicts. The list object itself is represented
+as a dict too. A board has a list of these lists, and is called <cite>lizt</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.boards.BoardList.add_card">
+<tt class="descname">add_card</tt><big>(</big><em>card</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#BoardList.add_card"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.BoardList.add_card" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a card to the list</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.boards.BoardList.archive">
+<tt class="descname">archive</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#BoardList.archive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.BoardList.archive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the value of key <cite>archive</cite> to True</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.boards.BoardList.get_card">
+<tt class="descname">get_card</tt><big>(</big><em>card_name</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#BoardList.get_card"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.BoardList.get_card" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a card from the list</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.boards.BoardList.get_order">
+<tt class="descname">get_order</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#BoardList.get_order"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.BoardList.get_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get order of cards in list</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.boards.BoardList.rename">
+<tt class="descname">rename</tt><big>(</big><em>new_name</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#BoardList.rename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.BoardList.rename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the value of key name to <cite>new_name</cite></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.boards.BoardList.reorder">
+<tt class="descname">reorder</tt><big>(</big><em>new_order</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#BoardList.reorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.BoardList.reorder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reorder the cards in list</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.boards.BoardList.save">
+<tt class="descname">save</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#BoardList.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.BoardList.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the list to the board</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="trellopy.boards.BoardListCard">
+<em class="property">class </em><tt class="descclassname">trellopy.boards.</tt><tt class="descname">BoardListCard</tt><big>(</big><em>name</em>, <em>data=None</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#BoardListCard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.BoardListCard" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>CARD:   This is implemented as a simple dict.</dt>
+<dd>The property &#8220;name&#8221; must exist, as all
+cards must have a name.</dd>
+</dl>
+<dl class="method">
+<dt id="trellopy.boards.BoardListCard.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>data=None</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#BoardListCard.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.BoardListCard.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes the damn card</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.boards.BoardListCard.archive">
+<tt class="descname">archive</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#BoardListCard.archive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.BoardListCard.archive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the value of key name to <cite>new_name</cite></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.boards.BoardListCard.assign">
+<tt class="descname">assign</tt><big>(</big><em>member_name</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#BoardListCard.assign"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.BoardListCard.assign" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign card to a member</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.boards.BoardListCard.label">
+<tt class="descname">label</tt><big>(</big><em>label_name</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#BoardListCard.label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.BoardListCard.label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attach label to card</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.boards.BoardListCard.rename">
+<tt class="descname">rename</tt><big>(</big><em>new_name</em><big>)</big><a class="reference internal" href="_modules/trellopy/boards.html#BoardListCard.rename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.boards.BoardListCard.rename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the value of key name to <cite>new_name</cite></p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-trellopy.members">
+<span id="members-py"></span><h2>members.py<a class="headerlink" href="#module-trellopy.members" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="trellopy.members.Member">
+<em class="property">class </em><tt class="descclassname">trellopy.members.</tt><tt class="descname">Member</tt><big>(</big><em>member_name</em><big>)</big><a class="reference internal" href="_modules/trellopy/members.html#Member"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.members.Member" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a member in the trellopy system.</p>
+<dl class="method">
+<dt id="trellopy.members.Member.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>member_name</em><big>)</big><a class="reference internal" href="_modules/trellopy/members.html#Member.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.members.Member.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a member class</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.members.Member.archive">
+<tt class="descname">archive</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/trellopy/members.html#Member.archive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.members.Member.archive" title="Permalink to this definition">¶</a></dt>
+<dd><p>archive the member</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.members.Member.in_database">
+<tt class="descname">in_database</tt><big>(</big><em>member_name</em><big>)</big><a class="reference internal" href="_modules/trellopy/members.html#Member.in_database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.members.Member.in_database" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if member already exists</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.members.Member.rename">
+<tt class="descname">rename</tt><big>(</big><em>new_name</em><big>)</big><a class="reference internal" href="_modules/trellopy/members.html#Member.rename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.members.Member.rename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rename the member</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-trellopy.backend">
+<span id="backend-py"></span><h2>backend.py<a class="headerlink" href="#module-trellopy.backend" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="trellopy.backend.Operator">
+<em class="property">class </em><tt class="descclassname">trellopy.backend.</tt><tt class="descname">Operator</tt><a class="reference internal" href="_modules/trellopy/backend.html#Operator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.backend.Operator" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the database operator. Currently only supports MongoDB.</p>
+<dl class="method">
+<dt id="trellopy.backend.Operator.__init__">
+<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/trellopy/backend.html#Operator.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.backend.Operator.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a connection to the database</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.backend.Operator.get_board">
+<tt class="descname">get_board</tt><big>(</big><em>board_name</em><big>)</big><a class="reference internal" href="_modules/trellopy/backend.html#Operator.get_board"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.backend.Operator.get_board" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a board from the database</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.backend.Operator.get_member">
+<tt class="descname">get_member</tt><big>(</big><em>member_name</em><big>)</big><a class="reference internal" href="_modules/trellopy/backend.html#Operator.get_member"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.backend.Operator.get_member" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a member from the database</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.backend.Operator.gimme_everybody">
+<tt class="descname">gimme_everybody</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/trellopy/backend.html#Operator.gimme_everybody"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.backend.Operator.gimme_everybody" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch every member in the database</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.backend.Operator.gimme_everything">
+<tt class="descname">gimme_everything</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/trellopy/backend.html#Operator.gimme_everything"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.backend.Operator.gimme_everything" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch every board in the database</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.backend.Operator.new_member">
+<tt class="descname">new_member</tt><big>(</big><em>member_dict</em><big>)</big><a class="reference internal" href="_modules/trellopy/backend.html#Operator.new_member"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.backend.Operator.new_member" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a member to the database</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.backend.Operator.save_board">
+<tt class="descname">save_board</tt><big>(</big><em>board_dict</em><big>)</big><a class="reference internal" href="_modules/trellopy/backend.html#Operator.save_board"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.backend.Operator.save_board" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the board to the database</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.backend.Operator.update_board">
+<tt class="descname">update_board</tt><big>(</big><em>board_data</em>, <em>board_name=None</em><big>)</big><a class="reference internal" href="_modules/trellopy/backend.html#Operator.update_board"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.backend.Operator.update_board" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the board in the database</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trellopy.backend.Operator.update_member">
+<tt class="descname">update_member</tt><big>(</big><em>member_data</em>, <em>member_name=None</em><big>)</big><a class="reference internal" href="_modules/trellopy/backend.html#Operator.update_member"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trellopy.backend.Operator.update_member" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update a member in database</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Modules</a><ul>
+<li><a class="reference internal" href="#module-trellopy.trellopy">trellopy.py</a></li>
+<li><a class="reference internal" href="#boards-py">boards.py</a></li>
+<li><a class="reference internal" href="#module-trellopy.members">members.py</a></li>
+<li><a class="reference internal" href="#module-trellopy.backend">backend.py</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="usage.html"
+                        title="previous chapter">Usage</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="contributing.html"
+                        title="next chapter">Contributing</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/modules.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="contributing.html" title="Contributing"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="usage.html" title="Usage"
+             >previous</a> |</li>
+        <li><a href="index.html">trellopy 0.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Amol Mundayoor.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

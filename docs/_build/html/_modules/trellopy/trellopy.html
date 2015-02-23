@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>trellopy.trellopy &mdash; trellopy 0.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="trellopy 0.0.0 documentation" href="../../index.html" />
+    <link rel="up" title="trellopy" href="../trellopy.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">trellopy 0.0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../trellopy.html" accesskey="U">trellopy</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for trellopy.trellopy</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  ..  .module:: trellopy</span>
+<span class="sd">      :synopsis: The &quot;main&quot; module. Has a Controller class that serves as</span>
+<span class="sd">      the first layer of interaction.</span>
+
+<span class="sd">    Actions which can be performed on each item include:</span>
+<span class="sd">    Boards can be:</span>
+<span class="sd">        ✓created</span>
+<span class="sd">        ✓renamed</span>
+<span class="sd">        ✓archived</span>
+<span class="sd">    Lists can be:</span>
+<span class="sd">        ✓created,</span>
+<span class="sd">        ✓archived,</span>
+<span class="sd">        ✓renamed,</span>
+<span class="sd">        ✓reordered</span>
+<span class="sd">    Cards can be:</span>
+<span class="sd">        ✓created,</span>
+<span class="sd">        ✓archived,</span>
+<span class="sd">        ✓renamed,</span>
+<span class="sd">        ✓reordered within a list,</span>
+<span class="sd">        ✓moved to another list</span>
+<span class="sd">    Members can be:</span>
+<span class="sd">        ✓created,</span>
+<span class="sd">        ✓renamed,</span>
+<span class="sd">        ✓archived,</span>
+<span class="sd">        ✓assigned to cards</span>
+<span class="sd">    Labels can be:</span>
+<span class="sd">        ✓renamed,</span>
+<span class="sd">        ✓assigned to cards,</span>
+<span class="sd">        ✓One label per card</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">boards</span> <span class="kn">import</span> <span class="n">Board</span>
+<span class="kn">from</span> <span class="nn">members</span> <span class="kn">import</span> <span class="n">Member</span>
+<span class="kn">from</span> <span class="nn">backend</span> <span class="kn">import</span> <span class="n">Operator</span>
+
+
+<div class="viewcode-block" id="Controller"><a class="viewcode-back" href="../../modules.html#trellopy.trellopy.Controller">[docs]</a><span class="k">class</span> <span class="nc">Controller</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The controller object is the main interface to the entire package. Use this</span>
+<span class="sd">    to make new boards, get boards, add new members, show all boards, and to</span>
+<span class="sd">    show all members.</span>
+
+<span class="sd">    Start by importing the python package:</span>
+
+<span class="sd">    &gt;&gt;&gt; import trellopy</span>
+
+<span class="sd">    Get an instance of the controller like so:</span>
+
+<span class="sd">    &gt;&gt;&gt; controller = trellopy.Controller()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Controller.__init__"><a class="viewcode-back" href="../../modules.html#trellopy.trellopy.Controller.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes a connection to the PyMongo Database.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_operator</span> <span class="o">=</span> <span class="n">Operator</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="Controller.new_board"><a class="viewcode-back" href="../../modules.html#trellopy.trellopy.Controller.new_board">[docs]</a>    <span class="k">def</span> <span class="nf">new_board</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new board with name *board_name*.</span>
+
+<span class="sd">        :param board_name: The name you want the board to have.</span>
+<span class="sd">        :returns: A Board class, with name attribute *board_name*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Board</span><span class="p">(</span><span class="n">board_name</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Controller.get_board"><a class="viewcode-back" href="../../modules.html#trellopy.trellopy.Controller.get_board">[docs]</a>    <span class="k">def</span> <span class="nf">get_board</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the board that has the name *board_name*.</span>
+
+<span class="sd">        :param board_name: The name of the board you want to get.</span>
+<span class="sd">        :returns: A Board class, with Board.board populated with board data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">board_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operator</span><span class="o">.</span><span class="n">get_board</span><span class="p">(</span><span class="n">board_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Board</span><span class="p">(</span><span class="n">board_name</span><span class="p">,</span> <span class="n">board_data</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Controller.show_boards"><a class="viewcode-back" href="../../modules.html#trellopy.trellopy.Controller.show_boards">[docs]</a>    <span class="k">def</span> <span class="nf">show_boards</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Show all the boards in the database.</span>
+
+<span class="sd">        :param: Takes no arguments, call it like it is.</span>
+<span class="sd">        :returns: A somewhat human-friendly listing of all boards.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">everything</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operator</span><span class="o">.</span><span class="n">gimme_everything</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">everything</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Board Name:&quot;</span><span class="p">,</span> <span class="n">each</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
+            <span class="k">print</span> <span class="s">&quot;Archived:  &quot;</span><span class="p">,</span> <span class="n">each</span><span class="p">[</span><span class="s">&#39;archived&#39;</span><span class="p">]</span>
+            <span class="n">all_lists</span> <span class="o">=</span> <span class="n">each</span><span class="p">[</span><span class="s">&#39;lists&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">all_lists</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">single</span> <span class="ow">in</span> <span class="n">all_lists</span><span class="p">:</span>
+                    <span class="k">print</span> <span class="s">&quot;  List Name:&quot;</span><span class="p">,</span> <span class="n">single</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
+            <span class="c"># print &quot;Lists:     &quot;, each[&#39;lists&#39;]</span>
+</div>
+<div class="viewcode-block" id="Controller.new_member"><a class="viewcode-back" href="../../modules.html#trellopy.trellopy.Controller.new_member">[docs]</a>    <span class="k">def</span> <span class="nf">new_member</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">member_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a new member with name *member_name*</span>
+
+<span class="sd">        :param member_name: The name of the member.</span>
+<span class="sd">        :returns: A Member class, with Members.person populated with name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Member</span><span class="p">(</span><span class="n">member_name</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Controller.get_member"><a class="viewcode-back" href="../../modules.html#trellopy.trellopy.Controller.get_member">[docs]</a>    <span class="k">def</span> <span class="nf">get_member</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">member_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get existing member with name *member_name*</span>
+
+<span class="sd">        :param member_name: The name of the member.</span>
+<span class="sd">        :returns: A Member class, with Members.person populated with name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Member</span><span class="p">(</span><span class="n">member_name</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Controller.show_members"><a class="viewcode-back" href="../../modules.html#trellopy.trellopy.Controller.show_members">[docs]</a>    <span class="k">def</span> <span class="nf">show_members</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Show all members in the database.</span>
+
+<span class="sd">        :param: Takes no arguments, call it like it is.</span>
+<span class="sd">        :returns: A somewhat human-friendly listing of all members.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">everybody</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operator</span><span class="o">.</span><span class="n">gimme_everybody</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">body</span> <span class="ow">in</span> <span class="n">everybody</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">body</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">trellopy 0.0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../trellopy.html" >trellopy</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Amol Mundayoor.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>
