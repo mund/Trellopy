@@ -45,16 +45,10 @@
           <div class="body">
             
   <h1>Source code for trellopy.boards</h1><div class="highlight"><pre>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">..  .module:: boards</span>
-<span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">backend</span> <span class="kn">import</span> <span class="n">Operator</span>
 
 
 <div class="viewcode-block" id="Board"><a class="viewcode-back" href="../../modules.html#trellopy.boards.Board">[docs]</a><span class="k">class</span> <span class="nc">Board</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    When initialized, a simple dict is saved to the database.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="Board.__init__"><a class="viewcode-back" href="../../modules.html#trellopy.boards.Board.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Initializes an Operator instance. The entire board is represented</span>
@@ -149,10 +143,6 @@
 
 </div></div>
 <div class="viewcode-block" id="BoardList"><a class="viewcode-back" href="../../modules.html#trellopy.boards.BoardList">[docs]</a><span class="k">class</span> <span class="nc">BoardList</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A List class is represented as follows in the database:</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
 <div class="viewcode-block" id="BoardList.__init__"><a class="viewcode-back" href="../../modules.html#trellopy.boards.BoardList.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">from_dict</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">*</span><span class="n">tuples</span><span class="p">,</span> <span class="o">**</span><span class="n">dicts</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Represents each list in a board. Cards tied to this list is</span>
@@ -225,11 +215,6 @@
 
 </div></div>
 <div class="viewcode-block" id="BoardListCard"><a class="viewcode-back" href="../../modules.html#trellopy.boards.BoardListCard">[docs]</a><span class="k">class</span> <span class="nc">BoardListCard</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    CARD:   This is implemented as a simple dict.</span>
-<span class="sd">            The property &quot;name&quot; must exist, as all</span>
-<span class="sd">            cards must have a name.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="BoardListCard.__init__"><a class="viewcode-back" href="../../modules.html#trellopy.boards.BoardListCard.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Initializes the damn card &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">card</span> <span class="o">=</span> <span class="p">{}</span>
