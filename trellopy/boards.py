@@ -1,4 +1,5 @@
 from backend import Operator
+from members import Member
 
 
 class Board(object):
@@ -111,10 +112,10 @@ class Board(object):
         :param label_name: The name of label
         :type label_name: str.
         """
-        if not self.boards['labels']:
-            self.boards['labels'] = []
-        if not len(self.boards['labels']) > 6:
-            self.boards['label'].append(label_name)
+        if not self.board['labels']:
+            self.board['labels'] = []
+        if not len(self.board['labels']) >= 6:
+            self.board['labels'].append(label_name)
 
     def rename_label(self, label, new_name):
         """ Rename the label on the board
@@ -124,9 +125,9 @@ class Board(object):
         :param new_name: The new name of label
         :type new_name: str.
         """
-        if label in self.boards['labels']:
-            idx = self.boards['labels'].index(label)
-            self.boards['labels'][idx] = new_name
+        if label in self.board['labels']:
+            idx = self.board['labels'].index(label)
+            self.board['labels'][idx] = new_name
 
     def in_database(self, name):
         """ Check if baord is already in the database
@@ -137,7 +138,7 @@ class Board(object):
         """
         return self._operator.get_board(name)
 
-    def update_board(self):
+    def save(self):
         """ Update the board in dictionary. Call this function to update lists.
         """
         self._operator.update_board(self.board)
@@ -159,6 +160,7 @@ class BoardList(object):
         :param from_dict: If the list is to be pre-populated from a dict.
         :type from_dict: dict.
         """
+        self._operator = Operator()
         if not from_dict:
             self.lizt = {}
             self.lizt['board'] = dicts.get('board')
@@ -243,12 +245,12 @@ class BoardList(object):
         """
         if isinstance(new_order, list):
             all_cards = self.lizt['cards']
-            all_cards = [all_cards[idx] for idx in new_order]
-            for each in all_cards:
-                index = all_cards.index(each)
-                print index, each['name']
-            self.lizt['cards'] = all_cards
-            # self._operator.update_board(self.board)
+            if len(all_cards) == len(new_order):
+                all_cards = [all_cards[idx] for idx in new_order]
+                for each in all_cards:
+                    index = all_cards.index(each)
+                    print index, each['name']
+                self.lizt['cards'] = all_cards
 
     def save(self):
         """ Save the list to the board """
@@ -256,6 +258,7 @@ class BoardList(object):
         for each in board['lists']:
             if each['name'] == self.lizt['name']:
                 each = self.lizt
+        self._operator.update_board(board)
 
 
 class BoardListCard(object):
@@ -293,11 +296,13 @@ class BoardListCard(object):
         self.card['name'] = new_name
         return self
 
-    def assign(self, member_name):
+    def assign(self, member):
         """ Assign card to a member """
         if not self.card['assigned']:
             self.card['assigned'] = []
-        self.card.assigned.append(member_name)
+        if isinstance(member, Member):
+            member_name = member.person['name']
+            self.card.assigned.append(member_name)
 
     def label(self, label_name):
         """ Attach label to card """

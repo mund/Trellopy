@@ -6,8 +6,8 @@
 
     Actions which can be performed on each item include:
     Boards can be:
-        ✓created
-        ✓renamed
+        ✓created,
+        ✓renamed,
         ✓archived
     Lists can be:
         ✓created,
